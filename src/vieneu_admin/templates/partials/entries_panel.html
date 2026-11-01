@@ -1,0 +1,29 @@
+{# Entries table with inline add form; swapped as a whole by HTMX (innerHTML of #entries-panel). #}
+{% set dictionary_id = dictionary.id %}
+{% if error %}<p class="alert error" role="alert">{{ error }}</p>{% endif %}
+{% if message %}<p class="alert ok" role="status">{{ message }}</p>{% endif %}
+{% if user.is_admin %}
+<form class="row card" hx-post="{{ u('admin_entry_add', dictionary_id=dictionary.id) }}" hx-target="#entries-panel">
+  {% set f = form|default({}) %}
+  <label>Term <input name="term" maxlength="80" value="{{ f.term|default('') }}" required></label>
+  <label>Replacement <input name="replacement" maxlength="200" value="{{ f.replacement|default('') }}"></label>
+  <label>Mode <select name="mode">{% for m in ['phonetic', 'en'] %}<option value="{{ m }}" {% if f.mode == m %}selected{% endif %}>{{ m }}</option>{% endfor %}</select></label>
+  <label class="check"><input type="checkbox" name="case_sensitive" value="1" {% if f.case_sensitive %}checked{% endif %}> Case-sensitive</label>
+  <label>Note <input name="note" value="{{ f.note|default('') }}"></label>
+  <button type="submit">Add</button>
+</form>
+{% endif %}
+<p class="muted">{{ total }} entr{{ 'y' if total == 1 else 'ies' }}{% if q %} matching "{{ q }}"{% endif %}.</p>
+<table>
+  <thead><tr><th>Term</th><th>Replacement</th><th>Mode</th><th>Case</th><th>Note</th><th></th></tr></thead>
+  <tbody id="entries-body">
+  {% for entry in entries %}{% include "partials/entry_row.html" %}{% endfor %}
+  </tbody>
+</table>
+{% if pages > 1 %}
+<nav class="pager">
+  {% if page > 1 %}<a href="?q={{ q|urlencode }}&amp;page={{ page - 1 }}">&larr; Prev</a>{% endif %}
+  <span>Page {{ page }} / {{ pages }}</span>
+  {% if page < pages %}<a href="?q={{ q|urlencode }}&amp;page={{ page + 1 }}">Next &rarr;</a>{% endif %}
+</nav>
+{% endif %}

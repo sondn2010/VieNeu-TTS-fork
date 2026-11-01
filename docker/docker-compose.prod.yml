@@ -40,6 +40,13 @@ services:
       - VIENEU_MAX_STREAMS=${VIENEU_MAX_STREAMS:-16}
       - VIENEU_QUEUE=${VIENEU_QUEUE:-16}
       - VIENEU_API_KEY=${VIENEU_API_KEY:-}
+      # Admin app at /admin (VIENEU_ADMIN=0 turns it off: keyless API as before).
+      # A fresh vieneu_data volume needs VIENEU_ADMIN_USER/PASSWORD or startup aborts.
+      - VIENEU_ADMIN=${VIENEU_ADMIN:-1}
+      - VIENEU_ADMIN_USER=${VIENEU_ADMIN_USER:-}
+      - VIENEU_ADMIN_PASSWORD=${VIENEU_ADMIN_PASSWORD:-}
+      - VIENEU_COOKIE_SECURE=${VIENEU_COOKIE_SECURE:-0}
+      - FORWARDED_ALLOW_IPS=${FORWARDED_ALLOW_IPS:-127.0.0.1}
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status == 200 else 1)"]
       interval: 15s
@@ -55,8 +62,10 @@ services:
               capabilities: [gpu]
     volumes:
       - huggingface_cache:/root/.cache/huggingface
+      - vieneu_data:/workspace/vieneu_data   # users, API keys, dictionaries (SQLite)
     env_file:
       - .env
 
 volumes:
   huggingface_cache:
+  vieneu_data:

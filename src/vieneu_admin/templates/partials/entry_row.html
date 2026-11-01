@@ -1,0 +1,13 @@
+<tr id="entry-{{ entry.id }}">
+  <td>{{ entry.term }}</td>
+  <td>{{ entry.replacement }}</td>
+  <td>{{ entry.mode }}</td>
+  <td>{{ 'yes' if entry.case_sensitive else 'no' }}</td>
+  <td class="small">{{ entry.note }}</td>
+  <td class="actions">{% if user.is_admin %}
+    <button type="button" class="secondary" hx-get="{{ u('admin_entry_edit', dictionary_id=dictionary_id, entry_id=entry.id) }}"
+            hx-target="closest tr" hx-swap="outerHTML">Edit</button>
+    <button type="button" class="danger" hx-post="{{ u('admin_entry_delete', dictionary_id=dictionary_id, entry_id=entry.id) }}"
+            hx-target="closest tr" hx-swap="outerHTML" hx-confirm="Delete {{ entry.term }}?">Delete</button>
+  {% endif %}</td>
+</tr>

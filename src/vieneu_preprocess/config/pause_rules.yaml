@@ -1,0 +1,160 @@
+# Story preprocessor rulebook (docs/tts-specs/tts-specs-v1.md sections 2 and 4).
+# Every duration, threshold and keyword the pipeline uses lives here so tuning
+# needs no code change. A custom rules file passed via `rules_path` / `--rules`
+# is deep-merged over this file: override only the keys you need (lists are
+# replaced, mappings are merged).
+
+# Section 4.2 pause duration matrix, in seconds.
+pauses:
+  p01_short_narration: 0.35     # ends with ".", 5-14 words
+  p02_standard_narration: 0.55  # ends with ".", 15-34 words
+  p03_long_narration: 0.85      # ends with ".", >= 35 words
+  p04_emphatic_short: 0.75      # <= 4 words, first or last sentence of a paragraph
+  p06_question_exclaim: 0.65    # ends with "?", "!" or "?!"
+  p07_shout_before: 0.5         # standalone shout / roll call
+  p07_shout_after: 0.9
+  p08_dash_pair_open: 0.3       # A — B — C  ->  A... [0.3] B... [0.35] C
+  p08_dash_pair_close: 0.35
+  p09_dash_tail: 0.4            # A — B.  ->  A... [0.4] B.
+  p10_long_clause_breath: 0.3   # long clause + "," + connector  ->  ",... [0.3]"
+  p11_dialogue_narration: 0.35  # dialogue <-> narration boundary, dialogue-intro colon
+  p12_inner_voice: 0.45         # narration <-> inner voice boundary, mind-cue colon
+  p13_paragraph: 1.0            # paragraph end
+  p14_scene: 1.8                # scene break (***) / chapter end marker
+  roll_call_comma: 0.25         # "Họ, Tên!"  ->  "Họ... [0.25] Tên!"  (section 2 row 4)
+  embedded_quote_before: 0.2    # section 2 row 6: ... [0.2] "..." [0.25]
+  embedded_quote_after: 0.25
+
+# Word-count thresholds (sections 4.1 and 4.2).
+thresholds:
+  p01_max_words: 14             # P-01 covers 5..14 words
+  p03_min_words: 35             # P-03 from 35 words; P-02 covers 15..34
+  emphatic_max_words: 4         # P-04
+  long_clause_words: 18         # P-10 clause length before the comma
+  soft_comma_max_words: 12      # commas joining clauses shorter than this never get a hard tag
+  shout_max_words: 3            # P-07 standalone shout length
+  caps_min_letters: 4           # unmapped ALL-CAPS words this long become Title Case
+  inner_short_clause_words: 3   # section 4.3: "," after a clause this short becomes "..." in inner voice
+
+# Section 2 row 3 / P-05 progressive dramatic pause.
+countdown:
+  ladder: [0.6, 0.85, 1.1, 1.4] # repeats the last value for longer runs
+  speed_ladder: [0.92, 0.90]    # section 5.3 example speeds, last value repeats
+  max_words: 5                  # a "short" sentence
+  min_run: 3                    # consecutive short sentences that form a countdown
+  time_run_min: 2               # shorter runs still count when every sentence has a time word
+  time_words: ["giây", "phút", "bước", "im lặng"]
+  soft_ending: "..."            # "Năm giây." -> "Năm giây..."
+
+speech:
+  # Verbs that close a dialogue tag; the subject before the verb is the speaker.
+  verbs: [
+    "nói", "thì thầm", "hét", "hét lên", "hét vang", "hô", "hô lớn", "hô vang",
+    "gào", "gào lên", "reo lên", "đáp", "hỏi", "kêu", "kêu lên", "la", "quát",
+    "lẩm bẩm", "tiếp tục", "thốt lên", "bật cười", "cười", "thở dài", "nhắc",
+    "gọi", "xướng", "rít", "gầm", "gầm gừ", "nạt", "hắng giọng", "trả lời",
+  ]
+  # Leading words dropped from a tag before reading its subject ("Rồi chiếc nón hét vang:").
+  tag_lead_words: [
+    "thế rồi", "rồi", "và", "bỗng nhiên", "bỗng", "đột nhiên", "nhưng",
+    "ngay lúc đó", "lúc đó", "cuối cùng",
+  ]
+  max_subject_words: 4
+  # Pronoun subjects resolve to the latest named narration subject ("hắn lẩm bẩm" -> Muzgash).
+  pronoun_subjects: ["hắn", "cô", "cậu", "anh", "ông", "bà", "lão", "nàng", "chàng", "nó", "gã", "y", "ả"]
+  # Section 2 row 6 embedded quote guard: nouns that introduce an in-sentence quote.
+  embedded_quote_nouns: [
+    "câu nói", "câu", "chữ", "cụm từ", "từ", "lời", "dòng chữ", "khẩu hiệu",
+    "biệt danh", "cái tên", "tên",
+  ]
+  # P-10 connectors after a long clause.
+  long_clause_connectors: ["thế nhưng", "nhưng", "thì", "khi", "và phía trên", "để lại"]
+
+# Section 2 row 2 telepathy / inner-voice detector.
+inner_voice:
+  mind_cues: ["trong tâm trí", "trong đầu", "tự nhủ", "trong tâm tưởng"]
+  # Interjected tags such as ", chiếc nón thì thầm." or ", giọng nói tiếp tục,".
+  tag_verbs: ["thì thầm", "tiếp tục", "nói", "đáp", "hỏi", "nhắc"]
+  self_openers: ["Tôi", "Mình"]                       # first person: the listener's own thought
+  other_openers: ["Con", "Chà", "Đúng vậy", "Hừm"]    # second person / interjections: the other voice
+  # Sentences starting with these subjects stay narration inside an inner-voice passage.
+  narration_subjects: [
+    "chiếc nón", "cô bé", "cậu bé", "cô", "cậu", "hắn", "anh", "ông", "bà",
+    "lão", "nàng", "chàng", "họ", "người",
+  ]
+  self_suffix: " (Nội tâm)"
+
+# Section 4.3 emotion tags and speed. The group with the longest matching keyword wins.
+# position: before | after (where the tag goes in the dialogue). end_pause overrides
+# the sentence-end pause when set.
+emotions:
+  - name: laugh
+    keywords: ["cười", "bật cười", "khúc khích", "tủm tỉm", "hài hước"]
+    tag: "[cười]"
+    position: after
+    speed: 1.02
+  - name: sigh
+    keywords: ["thở dài", "não nề", "buồn bã", "trầm ngâm", "lặng lẽ"]
+    tag: "[thở dài]"
+    position: before
+    speed: 0.92
+  - name: stern
+    keywords: ["hắng giọng", "đe dọa", "de dọa", "nghiêm nghị", "lạnh lùng"]
+    tag: "[hắng giọng]"
+    position: before
+    speed: 0.95
+  - name: fast
+    keywords: ["thì thầm rất nhanh", "liến thoắng", "vội vã", "lao tới"]
+    tag: ""
+    position: before
+    speed: 1.08
+    end_pause: 0.25
+  - name: shout
+    keywords: ["hô lớn", "hô vang", "hét vang", "gào lên", "reo lên"]
+    tag: ""
+    position: before
+    speed: 0.95
+  - name: inner
+    keywords: ["trong tâm trí", "trong đầu", "tự nhủ", "chiếc nón thì thầm"]
+    tag: ""
+    position: before
+    speed: 0.92
+
+speakers:
+  narrator: "Narrator"
+  narrator_label: "Người dẫn"
+  unknown_label: "Nhân vật"          # dialogue with no attributable tag
+  unknown_inner_label: "Giọng nói"   # telepathic voice never named in the passage
+  roll_call_speaker: ""              # caller of untagged "Họ, Tên!" lines; empty -> unknown_label
+  aliases: {}                        # tag subject (case-insensitive) -> speaker name
+
+labels:
+  scene: "Phân cảnh"
+
+defaults:
+  temperature: 0.8
+  chunk_prefix: "ch"
+
+sanitizer:
+  # Whole lines (after trimming) that mark a scene break (P-14).
+  scene_markers: ["***", "* * *", "⁂", "...", "---"]
+  # Chapter metadata lines removed by stage 1 (Python regex, case-insensitive, searched).
+  metadata_patterns:
+    - '^\s*(số từ|word count|words?)\s*[:：]\s*\d'
+    - '(thời gian đọc|reading time)\s*[:：]?\s*(khoảng\s*)?\d'
+    - '^\s*\d[\d.,]*\s*(từ|words)\s*([·|,•-].*)?$'
+    - '^\s*(lượt xem|views?|cập nhật|updated)\s*[:：]'
+  csv_min_fields: 4                  # comma/semicolon/pipe/tab rows with this many short fields
+  csv_max_field_words: 4
+  # Chapter openers used to recover a drop-cap letter lost by the reader UI
+  # ("ặt nước" -> "Mặt nước", "hi ông" -> "Khi ông"). Earlier entries win ties.
+  drop_cap_openers: [
+    "Mặt", "Khi", "Trong", "Những", "Một", "Bầu", "Cơn", "Ngày", "Đêm", "Sáng",
+    "Chiều", "Tiếng", "Người", "Từ", "Sau", "Lúc", "Gió", "Ánh", "Năm", "Hôm",
+    "Thế", "Vào", "Ở", "Dưới", "Trên", "Giữa", "Đã", "Không", "Cả", "Bóng",
+    "Con", "Cánh", "Cuộc", "Thời", "Mùa", "Chiếc", "Hắn", "Ông", "Bà", "Cô",
+    "Cậu", "Anh", "Nàng", "Lão", "Họ", "Đó", "Đây", "Tất", "Mọi", "Bên",
+    "Phía", "Xa", "Nơi", "Thành", "Lâu", "Nhiều", "Chỉ", "Nhưng", "Rồi", "Hai",
+    "Ba", "Mười", "Tôi", "Ta", "Chúng", "Mưa", "Sương", "Trời", "Biển", "Núi",
+    "Rừng", "Làng", "Phố", "Cửa", "Căn", "Bức", "Đoàn", "Tòa", "Vành",
+  ]

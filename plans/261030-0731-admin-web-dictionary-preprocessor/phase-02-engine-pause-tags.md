@@ -1,7 +1,7 @@
 ---
 phase: 2
 title: "Engine numeric pause tags"
-status: pending
+status: completed
 priority: P1
 effort: "5h"
 dependencies: [1]
@@ -23,18 +23,20 @@ Make `[x.xx]` in input text produce exactly that much silence on the v3 Turbo pa
 ## Files to Create / Modify
 
 - Modify: `src/vieneu_utils/core_utils.py` — `RE_PAUSE_TAG = re.compile(r"\[\s*(\d{1,2}(?:\.\d{1,3})?)\s*(?:s)?\s*\]")`, `PAUSE_TAG_MIN=0.0`, `PAUSE_TAG_MAX=5.0`, `split_pause_tags(text) -> (segments, pauses)`; `gaps_to_silence` accepts `float` entries and returns them unchanged.
-- Modify: `src/vieneu_utils/phonemize_text.py` — in `normalize_to_chunks_v3_with_gaps`, split raw text on pause tags first, chunk each segment as today, and join segment results with the explicit float as the gap; `_merge_short_chunks` never merges across a float gap; `normalize_to_chunks_v3` and the legacy `normalize_to_chunks`/`phonemize_to_chunks` strip tags (replace with a sentence boundary).
-- Modify: `src/vieneu/v3turbo.py` — leading tag (before the first chunk) yields/prepends silence; trailing tag appends silence; both batch and stream. No other change.
+- Modify: `src/vieneu_utils/phonemize_text.py` — in `normalize_to_chunks_v3_with_gaps`, split raw text on pause tags first, chunk each segment as today, and join segment results with explicit floats as gaps; `_merge_short_chunks` never merges across a float gap; `normalize_to_chunks_v3` and the legacy `normalize_to_chunks`/`phonemize_to_chunks` strip tags (replace with a sentence boundary).
+<!-- red-team finding 2: explicit lead/tail silence in chunker contract -->
+To avoid off-by-one gap indexing or dropping silence when inputs have leading/trailing pause tags (e.g. `"[1.0] Xin chào [0.5]"` or solo `"[2.0]"`), the function returns `tuple[list[str], list[str | float], float, float]` (chunks, internal gaps with `len(gaps) == max(0, len(chunks)-1)`, lead_silence_s, tail_silence_s), preserving the invariant that `gaps` strictly indexes inter-chunk boundaries.
+- Modify: `src/vieneu/v3turbo.py` — leading pause yields/prepends `lead_silence_s` samples; trailing pause yields/appends `tail_silence_s` samples; both batch and stream. When `chunks` is empty but silence > 0, yields/returns pure silence instead of an empty array.
 - Create: `tests/test_pause_tags.py`.
 
 ## Tasks & Steps
 
-- [ ] Add `split_pause_tags` and the float-aware `gaps_to_silence`; values outside 0–5 s clamp, malformed tags such as `[abc]` are untouched (emotion handling keeps owning them).
-- [ ] Rework `normalize_to_chunks_v3_with_gaps` as described; keep the return type `tuple[list[str], list[str | float]]` and document it.
-- [ ] Two adjacent tags `[0.3] [0.5]` sum to one boundary (0.8 s). A tag inside `<en>…</en>` is left as text.
-- [ ] Make the gaps-less entry points strip tags.
-- [ ] Leading and trailing silence in `infer` and `infer_stream`.
-- [ ] Tests (no model needed; use the chunker directly and a fake `_infer_chunks`):
+- [x] Add `split_pause_tags` and the float-aware `gaps_to_silence`; values outside 0–5 s clamp, malformed tags such as `[abc]` are untouched (emotion handling keeps owning them).
+- [x] Rework `normalize_to_chunks_v3_with_gaps` as described; return `tuple[list[str], list[str | float], float, float]` with explicit lead/tail silence and document it.
+- [x] Two adjacent tags `[0.3] [0.5]` sum to one boundary (0.8 s). A tag inside `<en>…</en>` is left as text.
+- [x] Make the gaps-less entry points strip tags.
+- [x] Leading and trailing silence in `infer` and `infer_stream`, including solo pause tag inputs returning exact silence duration.
+- [x] Tests (no model needed; use the chunker directly and a fake `_infer_chunks`):
   - untagged text: chunks and gaps identical to a snapshot taken before the change (regression);
   - `"Một. [0.6] Hai. [1.4] Ba."` → 3 chunks, gaps `[0.6, 1.4]`;
   - tag never appears in any chunk text or phoneme string;

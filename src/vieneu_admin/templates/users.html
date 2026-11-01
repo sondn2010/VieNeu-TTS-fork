@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<h1>Users</h1>
+<section class="card">
+  <h2>Create user</h2>
+  <form method="post" action="{{ u('admin_users_create') }}" class="row">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label>Username <input name="username" pattern="[A-Za-z0-9_.\-]{3,40}" required></label>
+    <label>Password <input name="password" type="password" minlength="8" autocomplete="new-password" required></label>
+    <label>Role <select name="role"><option value="user">user</option><option value="admin">admin</option></select></label>
+    <button type="submit">Create</button>
+  </form>
+</section>
+<table>
+  <thead><tr><th>Username</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for u_ in users %}
+    <tr>
+      <td>{{ u_.username }}{% if u_.id == user.id %} <span class="muted">(you)</span>{% endif %}</td>
+      <td>
+        <form method="post" action="{{ u('admin_users_role', user_id=u_.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <select name="role">{% for r in ['user', 'admin'] %}<option value="{{ r }}" {% if r == u_.role %}selected{% endif %}>{{ r }}</option>{% endfor %}</select>
+          <button type="submit" class="secondary">Set</button>
+        </form>
+      </td>
+      <td>
+        <form method="post" action="{{ u('admin_users_active', user_id=u_.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input type="hidden" name="active" value="{{ '0' if u_.active else '1' }}">
+          {% if u_.active %}<span class="badge ok">active</span>{% else %}<span class="badge">disabled</span>{% endif %}
+          <button type="submit" class="secondary">{{ 'Disable' if u_.active else 'Enable' }}</button>
+        </form>
+      </td>
+      <td>{{ u_.created_at|ts }}</td>
+      <td class="actions">
+        <form method="post" action="{{ u('admin_users_password', user_id=u_.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input name="password" type="password" minlength="8" placeholder="new password" autocomplete="new-password" required>
+          <button type="submit" class="secondary">Reset password</button>
+        </form>
+        <form method="post" action="{{ u('admin_users_delete', user_id=u_.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="danger" data-confirm="Delete user {{ u_.username }} and all their keys?">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

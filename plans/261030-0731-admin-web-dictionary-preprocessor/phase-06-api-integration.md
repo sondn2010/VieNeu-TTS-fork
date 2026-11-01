@@ -1,7 +1,7 @@
 ---
 phase: 6
 title: "Speech API integration and deploy"
-status: pending
+status: completed
 priority: P1
 effort: "6h"
 dependencies: [2, 3, 4, 5]
@@ -23,13 +23,15 @@ Wire the admin app, DB-backed keys and the opt-in preprocessor into `apps/openai
 
 ## Tasks & Steps
 
-- [ ] Startup: open `AdminStore`, run migrations, `seed_if_empty`, `bootstrap_admin` from env when no admin exists (log the username only, never the password); `VIENEU_ADMIN=0` skips mounting the router (keys in DB still checked if the DB exists).
-- [ ] Auth dependency `_auth`: accept `VIENEU_API_KEY` (unchanged `hmac` compare) or a valid DB key. When the admin app is enabled (default), **every** `/v1/*` request requires a key, even when no keys exist yet (user decision, validation Q1). With `VIENEU_ADMIN=0`, keep today's behavior exactly (env key or open with the existing warning). Log at startup which mode is active, and when the admin app is on with zero keys, log that all API calls will get 401 until a key is created.
-- [ ] `SpeechRequest.preprocess: bool = False`. When true: `result = preprocess(req.input, store.enabled_lexicon())`, then stream `result.to_tagged_text()` through the existing path; chunk speed is not applied on the streaming path (header `X-VieNeu-Ignored: speed` already exists — reuse it). When false: byte-identical request to the engine as today.
-- [ ] Response header `X-VieNeu-Preprocess: 1` when applied; request `max_chars` still applies.
-- [ ] Mount router: `app.include_router(create_admin_router(store, tts_provider=_EngineProvider()), prefix="/admin")` and `app.mount("/admin/static", StaticFiles(...))`; `_EngineProvider.render` acquires a stream slot (same queue/429 semantics) and runs `vieneu_preprocess.render` in a worker thread; returns WAV via `soundfile` or FLAC.
-- [ ] `GET /` redirects to `/admin/` when the admin app is mounted.
-- [ ] Tests (extend the existing FakeTTS fixture): DB key accepted, revoked key 401, disabled user 401, env key still accepted, admin app on with zero keys returns 401, `VIENEU_ADMIN=0` with no env key stays open, `preprocess=true` sends tagged text with `[x]` tags and lexicon replacements to `infer_stream`, `preprocess=false` sends input unchanged, admin router reachable, Script Lab render returns a WAV with the fake engine.
+- [x] Startup: open `AdminStore`, run migrations, `seed_if_empty`, `bootstrap_admin` from env when no admin exists (log the username only, never the password). If no admin exists in DB and no env credentials are provided, abort startup with an informative configuration error requiring `VIENEU_ADMIN_USER`/`VIENEU_ADMIN_PASSWORD` or prior CLI initialization to prevent unconfigured public exposure; `VIENEU_ADMIN=0` skips mounting the router (keys in DB still checked if the DB exists).
+<!-- Updated: Validation Session 2 - require explicit env credentials on fresh DB start -->
+- [x] Auth dependency `_auth`: accept `VIENEU_API_KEY` (unchanged `hmac` compare) or a valid DB key. When the admin app is enabled (default), **every** `/v1/*` request requires a key, even when no keys exist yet (user decision, validation Q1). With `VIENEU_ADMIN=0`, keep today's behavior exactly (env key or open with the existing warning). Log at startup which mode is active, and when the admin app is on with zero keys, log that all API calls will get 401 until a key is created.
+- [x] `SpeechRequest.preprocess: bool = False`. When true: attempt `result = preprocess(req.input, store.enabled_lexicon())` and stream `result.to_tagged_text()` through the existing path. If preprocessor parsing encounters an unexpected error or syntax anomaly, fail-open: log a warning, fall back to streaming `req.input` directly without failing the customer TTS request. Chunk speed is not applied on the streaming path (header `X-VieNeu-Ignored: speed` already exists — reuse it). When false: byte-identical request to the engine as today.
+<!-- Updated: Validation Session 2 - fail-open with raw text fallback on preprocessor error -->
+- [x] Response header `X-VieNeu-Preprocess: 1` when applied; request `max_chars` still applies.
+- [x] Mount router: `app.include_router(create_admin_router(store, tts_provider=_EngineProvider()), prefix="/admin")` and `app.mount("/admin/static", StaticFiles(...))`; `_EngineProvider.render` acquires a stream slot (same queue/429 semantics) and synchronizes with the engine execution lock (preventing concurrent CUDA graph conflicts with `StreamScheduler` on GPU) while running `vieneu_preprocess.render` in a worker thread; returns WAV via `soundfile` or FLAC.
+- [x] `GET /` redirects to `/admin/` when the admin app is mounted.
+- [x] Tests (extend the existing FakeTTS fixture): DB key accepted, revoked key 401, disabled user 401, env key still accepted, admin app on with zero keys returns 401, `VIENEU_ADMIN=0` with no env key stays open, `preprocess=true` sends tagged text with `[x]` tags and lexicon replacements to `infer_stream`, `preprocess=false` sends input unchanged, admin router reachable, Script Lab render returns a WAV with the fake engine.
 
 ## Verification
 

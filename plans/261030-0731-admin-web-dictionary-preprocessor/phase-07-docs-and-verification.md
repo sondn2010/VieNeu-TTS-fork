@@ -1,7 +1,7 @@
 ---
 phase: 7
 title: "Bilingual docs and final verification"
-status: pending
+status: completed
 priority: P2
 effort: "5h"
 dependencies: [6]
@@ -21,11 +21,11 @@ Write the app-functions reference and the user guide in English and Vietnamese, 
 
 ## Tasks & Steps
 
-- [ ] Write from the implemented code, not from the plan; verify every route, env var and default by grepping source.
-- [ ] Keep each file under 800 lines; Vietnamese files mirror English structure section by section.
-- [ ] Open `/admin/help` in both languages for both docs; check tables, code blocks and links render.
-- [ ] Walk the plan success criteria one by one against the running app and the test suite; record results in `plans/reports/verification-<timestamp>-admin-web-dictionary-preprocessor.md`.
-- [ ] List seed dictionary files and the spec sample commands in the report so the user can verify pronunciation by ear.
+- [x] Write from the implemented code, not from the plan; verify every route, env var and default by grepping source.
+- [x] Keep each file under 800 lines; Vietnamese files mirror English structure section by section.
+- [x] Open `/admin/help` in both languages for both docs; check tables, code blocks and links render.
+- [x] Walk the plan success criteria one by one against the running app and the test suite; record results in `plans/reports/verification-<timestamp>-admin-web-dictionary-preprocessor.md`.
+- [x] List seed dictionary files and the spec sample commands in the report so the user can verify pronunciation by ear.
 
 ## Verification
 

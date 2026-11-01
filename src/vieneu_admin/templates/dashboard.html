@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Welcome, {{ user.username }}</h1>
+<div class="grid">
+  <section class="card">
+    <h2>API keys</h2>
+    <p><strong>{{ key_count }}</strong> active key(s).</p>
+    <a href="{{ u('admin_keys') }}">Manage keys</a>
+  </section>
+  <section class="card">
+    <h2>Enabled dictionaries</h2>
+    {% if dictionaries %}
+    <ul>{% for d in dictionaries %}<li><a href="{{ u('admin_dictionary', dictionary_id=d.id) }}">{{ d.name }}</a> <span class="muted">({{ d.entry_count }})</span></li>{% endfor %}</ul>
+    {% else %}<p class="muted">No dictionary is enabled.</p>{% endif %}
+  </section>
+  <section class="card">
+    <h2>Script Lab</h2>
+    <p>Engine: {% if engine_available %}<span class="badge ok">loaded</span>{% else %}<span class="badge">not loaded</span>{% endif %}</p>
+    <a href="{{ u('admin_script_lab') }}">Open Script Lab</a> · <a href="{{ u('admin_help') }}?doc=guide&amp;lang=en">User guide</a>
+  </section>
+</div>
+{% endblock %}

@@ -78,6 +78,8 @@ dependencies = [
     "PyYAML", # gradio config.yaml
     "gradio>=5.49.1", # web UI (vieneu-web)
     "librosa>=0.11.0",
+    "jinja2", # admin web app templates (already pulled in by gradio)
+    "markdown-it-py", # in-app Help page renders docs/*.md (already pulled in by gradio)
     # NOTE: audio watermarking is opt-in via `pip install vieneu[watermark]` (resemble-perth,
     # needs torch/torchaudio). The PyPI package literally named `perth` is an unrelated
     # threading helper and must NOT be listed here (issue #191).
@@ -161,16 +163,20 @@ pythonpath = ["src"]
 [project.scripts]
 vieneu-web = "apps.gradio_main:main"
 vieneu-stream = "apps.web_stream:main"
+vieneu-preprocess = "vieneu_preprocess.cli:main"
+vieneu-api = "apps.openai_speech:main"
 
 [tool.setuptools]
 package-dir = {"" = "src", "apps" = "apps", "examples" = "examples"}
 
 [tool.setuptools.packages.find]
 where = ["src", "."]
-include = ["vieneu*", "vieneu_utils*", "apps*", "examples*"]
+include = ["vieneu*", "vieneu_utils*", "vieneu_preprocess*", "vieneu_admin*", "apps*", "examples*"]
 
 [tool.setuptools.package-data]
 vieneu = ["assets/*.json", "assets/samples/*"]
+vieneu_preprocess = ["config/*.yaml"]
+vieneu_admin = ["templates/*.html", "templates/**/*.html", "static/*", "seed/*.json"]
 examples = ["audio_ref/*.wav", "srt/*.srt"]  # samples the Gradio app (vieneu-web) offers
 
 [tool.uv.sources]

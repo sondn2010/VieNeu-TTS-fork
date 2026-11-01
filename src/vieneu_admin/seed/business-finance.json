@@ -1,0 +1,441 @@
+{
+  "format": "vieneu-dictionary/1",
+  "name": "Kinh doanh và tài chính",
+  "kind": "term",
+  "enabled": true,
+  "description": "Thuật ngữ kinh doanh, chứng khoán, tiền tệ và khởi nghiệp thường gặp trong báo chí.",
+  "entries": [
+    {
+      "term": "KPI",
+      "replacement": "kây-pi-ai",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "OKR",
+      "replacement": "âu-kây-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ROI",
+      "replacement": "a-âu-ai",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ROE",
+      "replacement": "a-âu-i",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ROA",
+      "replacement": "a-âu-ây",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "EPS",
+      "replacement": "i-pi-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "P/E",
+      "replacement": "pi-i",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IPO",
+      "replacement": "ai-pi-âu",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ETF",
+      "replacement": "i-ti-ép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "FDI",
+      "replacement": "ép-đê-i",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ODA",
+      "replacement": "ô-đê-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CPI",
+      "replacement": "xê-pê-i",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "Fed",
+      "replacement": "Phét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "M&A",
+      "replacement": "em-en-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SME",
+      "replacement": "ét-em-e",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "B2B",
+      "replacement": "bi-tu-bi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "B2C",
+      "replacement": "bi-tu-xi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CRM",
+      "replacement": "xi-a-em",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ERP",
+      "replacement": "i-a-pi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "P&L",
+      "replacement": "pi-en-eo",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "EBITDA",
+      "replacement": "I-bít-đa",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VAT",
+      "replacement": "vê-a-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "USD",
+      "replacement": "u-ét-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VND",
+      "replacement": "vê-en-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "EUR",
+      "replacement": "ơ-rô",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NFT",
+      "replacement": "en-ép-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HOSE",
+      "replacement": "Hô-dê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HNX",
+      "replacement": "hát-en-ích",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UPCoM",
+      "replacement": "Úp-côm",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VN-Index",
+      "replacement": "vê-en in-đéc",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VN30",
+      "replacement": "vê-en ba mươi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HNX-Index",
+      "replacement": "hát-en-ích in-đéc",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "S&P 500",
+      "replacement": "ét-en-pi năm trăm",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "GMV",
+      "replacement": "gi-em-vi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "Fintech",
+      "replacement": "Phin-tếch",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Ethereum",
+      "replacement": "Ê-thê-ri-âm",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Nasdaq",
+      "replacement": "Nát-đắc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "startup",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "marketing",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "branding",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "e-commerce",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "logistics",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "supply chain",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "outsourcing",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "franchise",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "business",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "sales",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "telesales",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "digital marketing",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "affiliate",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "dropshipping",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "crowdfunding",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "venture capital",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "investor",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "shark",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "unicorn",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "valuation",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "pitching",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "pitch deck",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "trader",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "trading",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "margin",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "forex",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "crypto",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Bitcoin",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "blockchain",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Dow Jones",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Wall Street",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "holding",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "marketplace",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "omnichannel",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "retail",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cashflow",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "budget",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "revenue",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "profit",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "audit",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "compliance",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "benchmark",
+      "mode": "en",
+      "case_sensitive": false
+    }
+  ]
+}

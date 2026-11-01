@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Script Lab{% endblock %}
+{% block content %}
+<h1>Script Lab</h1>
+<p class="muted">Paste a story (up to {{ "{:,}".format(max_analysis) }} characters) to see the speaker script, chunk JSON and
+  tagged text. Audio preview renders up to {{ "{:,}".format(max_render) }} characters; use the <code>vieneu-preprocess</code> CLI for whole chapters.</p>
+{% if not engine_available %}<p class="alert warn">Engine not loaded: analysis works, audio rendering is unavailable.</p>{% endif %}
+<form hx-post="{{ u('admin_script_lab_preprocess') }}" hx-target="#lab-result" hx-indicator="#lab-busy">
+  <label>Text
+    <textarea id="lab-text" name="text" rows="14" maxlength="{{ max_analysis }}" required data-counter="#lab-count"></textarea>
+  </label>
+  <div class="row">
+    <button type="submit">Analyse</button>
+    <span id="lab-count" class="muted small" data-max-render="{{ max_render }}"></span>
+    <span id="lab-busy" class="htmx-indicator muted">Working…</span>
+  </div>
+</form>
+<div id="lab-result" aria-live="polite"></div>
+{% endblock %}

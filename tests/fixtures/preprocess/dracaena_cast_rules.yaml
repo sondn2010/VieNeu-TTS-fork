@@ -1,0 +1,7 @@
+# Story-specific cast hints for the spec section 5.1 sample, deep-merged over
+# the default pause_rules.yaml.
+speakers:
+  roll_call_speaker: "McGonagall"
+  aliases:
+    "chiếc nón": "Nón Phân Loại"
+    "nón phân loại": "Nón Phân Loại"

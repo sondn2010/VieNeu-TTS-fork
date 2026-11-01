@@ -2,7 +2,7 @@ import re
 import os
 import math
 from dataclasses import dataclass
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Union
 
 import numpy as np
 
@@ -168,9 +168,101 @@ def max_expected_frames(phonemes: str) -> int:
     return cap
 
 
-def gaps_to_silence(gaps: List[str]) -> List[float]:
-    """Map list loại-ranh-giới -> list TỔNG khoảng nghỉ (giây) cho ``join_audio_chunks``."""
-    return [V3_GAP_SILENCE.get(g, V3_GAP_SILENCE["sentence"]) for g in gaps]
+def gaps_to_silence(gaps: List[Union[str, float]]) -> List[float]:
+    """Map list loại-ranh-giới -> list TỔNG khoảng nghỉ (giây) cho ``join_audio_chunks``.
+
+    Phần tử là số (khoảng nghỉ tường minh từ thẻ ``[x.xx]``, xem
+    :func:`split_pause_tags`) được giữ nguyên giá trị giây."""
+    return [
+        V3_GAP_SILENCE.get(g, V3_GAP_SILENCE["sentence"]) if isinstance(g, str) else float(g)
+        for g in gaps
+    ]
+
+
+# ─── Thẻ nghỉ tường minh [x.xx] ──────────────────────────────────────────────
+# ``[0.35]`` / ``[1.5s]`` trong text = nghỉ đúng bấy nhiêu giây ở ranh giới đó (đường
+# v3 Turbo). Các đường không có gaps (v1/v2, ``normalize_to_chunks_v3``) chỉ xoá thẻ
+# và coi chỗ đó là ranh giới câu — thẻ KHÔNG BAO GIỜ được đọc thành lời. Thẻ dạng
+# khác (``[abc]``, ``[cười]``) không khớp và vẫn thuộc về xử lý emotion cue.
+RE_PAUSE_TAG = re.compile(r"\[\s*(\d{1,2}(?:\.\d{1,3})?)\s*(?:s)?\s*\]")
+PAUSE_TAG_MIN = 0.0
+PAUSE_TAG_MAX = 5.0
+_RE_EN_SPAN = re.compile(r"<en>.*?</en>", re.IGNORECASE | re.DOTALL)
+_PAUSE_SENT_END = frozenset(".!?…")
+_PAUSE_TRAILING_CLOSE = "\"'’”)]}»›」』"
+
+
+def clamp_pause(seconds: float) -> float:
+    """Kẹp khoảng nghỉ tường minh vào ``[PAUSE_TAG_MIN, PAUSE_TAG_MAX]`` giây."""
+    return min(PAUSE_TAG_MAX, max(PAUSE_TAG_MIN, float(seconds)))
+
+
+def split_pause_tags(text: str) -> Tuple[List[str], List[float]]:
+    """Tách ``text`` theo thẻ nghỉ ``[x.xx]`` -> ``(segments, pauses)``.
+
+    ``len(segments) == len(pauses) + 1``; ``pauses[i]`` là khoảng nghỉ (giây, đã kẹp
+    0–5 s) giữa ``segments[i]`` và ``segments[i+1]``. Segment đầu/cuối rỗng khi thẻ
+    nằm ở đầu/cuối text. Các thẻ chỉ cách nhau bởi khoảng trắng (``[0.3] [0.5]``)
+    cộng dồn thành MỘT ranh giới (0.8 s, vẫn kẹp ở 5 s). Thẻ nằm trong ``<en>…</en>``
+    được giữ nguyên là text. Text không có thẻ -> ``([text], [])``.
+    """
+    if not text or "[" not in text:
+        return [text], []
+    en_spans = [m.span() for m in _RE_EN_SPAN.finditer(text)]
+    segments: List[str] = []
+    pauses: List[float] = []
+    pos = 0
+    for m in RE_PAUSE_TAG.finditer(text):
+        if any(a <= m.start() < b for a, b in en_spans):
+            continue
+        seconds = clamp_pause(float(m.group(1)))
+        between = text[pos:m.start()]
+        if pauses and not between.strip():
+            # Thẻ liền thẻ trước (chỉ cách khoảng trắng): cùng một ranh giới.
+            pauses[-1] = clamp_pause(pauses[-1] + seconds)
+        else:
+            segments.append(between)
+            pauses.append(seconds)
+        pos = m.end()
+    segments.append(text[pos:])
+    return segments, pauses
+
+
+def _has_sentence_end(s: str) -> bool:
+    core = s.rstrip().rstrip(_PAUSE_TRAILING_CLOSE)
+    return bool(core) and core[-1] in _PAUSE_SENT_END
+
+
+def strip_pause_tags(text: str) -> str:
+    """Xoá thẻ nghỉ ``[x.xx]`` khỏi ``text``, thay bằng một ranh giới câu.
+
+    Dùng cho các đường không mang được khoảng nghỉ tường minh (v1/v2,
+    ``normalize_to_chunks_v3``): segment trước thẻ chưa có dấu kết câu thì thêm
+    ``.``; khoảng trắng quanh thẻ có xuống dòng thì giữ ngắt đoạn. Text không có
+    thẻ trả về NGUYÊN VẸN (cùng object).
+    """
+    segments, pauses = split_pause_tags(text)
+    if not pauses:
+        return text
+    out = ""
+    for k, seg in enumerate(segments):
+        if not seg.strip():
+            # Segment rỗng (thẻ ở đầu/cuối hoặc thẻ cách nhau bởi xuống dòng):
+            # giữ ngắt đoạn nếu có, không thêm dấu câu.
+            if "\n" in seg or "\r" in seg:
+                out = out.rstrip(" \t") + "\n"
+            continue
+        body = seg.strip()
+        if out and not out.endswith("\n"):
+            lead_ws = seg[: len(seg) - len(seg.lstrip())]
+            out += "\n" if ("\n" in lead_ws or "\r" in lead_ws) else " "
+        out += body
+        if k < len(pauses) and not _has_sentence_end(body):
+            out += "."
+        trail_ws = seg[len(seg.rstrip()):]
+        if k < len(pauses) and ("\n" in trail_ws or "\r" in trail_ws):
+            out += "\n"
+    return out.strip()
 
 
 def edge_silence(

@@ -19,3 +19,8 @@ finetune/output/
 
 # Merged Models
 merged_models_cache/
+
+/.claude/hooks/.logs/hook-log.jsonl
+
+# Admin web app data (SQLite)
+vieneu_data/

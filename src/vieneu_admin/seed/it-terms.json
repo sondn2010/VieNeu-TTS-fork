@@ -1,0 +1,679 @@
+{
+  "format": "vieneu-dictionary/1",
+  "name": "Thuật ngữ công nghệ",
+  "kind": "term",
+  "enabled": true,
+  "description": "Thuật ngữ CNTT: từ v3 Turbo đọc tốt giữ giọng Anh, từ dễ đọc sai được phiên âm tiếng Việt.",
+  "entries": [
+    {
+      "term": "Docker",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "GitHub",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "GitLab",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Git",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Python",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "JavaScript",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "TypeScript",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Java",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "backend",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "frontend",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fullstack",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "server",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "database",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cloud",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "DevOps",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "framework",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "library",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Android",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "React",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Angular",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Node.js",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Flask",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Kafka",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Jenkins",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Flutter",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Swift",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Rust",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "commit",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "push",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "pull request",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "merge",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "branch",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "deploy",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "release",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "bug",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "debug",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "code",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "coder",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "coding",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "developer",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "tester",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "testing",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "microservice",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "container",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cluster",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "pipeline",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "serverless",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "big data",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "data center",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "machine learning",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "deep learning",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "chatbot",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "OpenAI",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "metaverse",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cybersecurity",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "firewall",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hacker",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "malware",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "ransomware",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "phishing",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "spam",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "router",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "modem",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "software",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hardware",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "firmware",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "driver",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "plugin",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "extension",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "browser",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Chrome",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Firefox",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Microsoft",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Excel",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "PowerPoint",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Outlook",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "localhost",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "domain",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hosting",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Copilot",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Windows",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Photoshop",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Figma",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Kubernetes",
+      "replacement": "Ku-bơ-nét-tít",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Nginx",
+      "replacement": "En-gin-ích",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "MySQL",
+      "replacement": "Mai-ét-kiu-eo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "PostgreSQL",
+      "replacement": "Pốt-grét ét-kiu-eo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "MongoDB",
+      "replacement": "Mông-gô đi-bi",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Redis",
+      "replacement": "Rê-đít",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Azure",
+      "replacement": "A-giơ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Linux",
+      "replacement": "Li-nắc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Ubuntu",
+      "replacement": "U-bun-tu",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Apache",
+      "replacement": "A-pa-chi",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Django",
+      "replacement": "Giang-gô",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Laravel",
+      "replacement": "La-ra-ven",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Golang",
+      "replacement": "Gô-lang",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Kotlin",
+      "replacement": "Cốt-lin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Vue",
+      "replacement": "Viu",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "ChatGPT",
+      "replacement": "Chát gi-pi-ti",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "iOS",
+      "replacement": "ai-âu-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "macOS",
+      "replacement": "mác-âu-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SaaS",
+      "replacement": "Xát",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CI/CD",
+      "replacement": "xi-ai xi-đi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HTML",
+      "replacement": "hát-tê-em-lờ",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CSS",
+      "replacement": "xi-ét-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "JSON",
+      "replacement": "Giây-sơn",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "XML",
+      "replacement": "ích-em-eo",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SQL",
+      "replacement": "ét-kiu-eo",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NoSQL",
+      "replacement": "Nâu ét-kiu-eo",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HTTP",
+      "replacement": "hát-tê-tê-pê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HTTPS",
+      "replacement": "hát-tê-tê-pê-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "URL",
+      "replacement": "diu-a-eo",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "DNS",
+      "replacement": "đi-en-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UI",
+      "replacement": "diu-ai",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UX",
+      "replacement": "diu-ích",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "QA",
+      "replacement": "kiu-ây",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "AWS",
+      "replacement": "ây-đắp-bờ-liu-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PHP",
+      "replacement": "pi-ếch-pi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SDK",
+      "replacement": "ét-đi-kây",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IDE",
+      "replacement": "ai-đi-i",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "LLM",
+      "replacement": "eo-eo-em",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "GPT",
+      "replacement": "gi-pi-ti",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "C++",
+      "replacement": "xi cộng cộng",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Ký hiệu được khớp nguyên văn, không qua regex."
+    },
+    {
+      "term": "C#",
+      "replacement": "xi sáp",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Ký hiệu được khớp nguyên văn, không qua regex."
+    },
+    {
+      "term": ".NET",
+      "replacement": "đót-nét",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Ký hiệu được khớp nguyên văn, không qua regex."
+    }
+  ]
+}

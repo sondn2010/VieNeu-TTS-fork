@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Dictionaries{% endblock %}
+{% block content %}
+<h1>Pronunciation dictionaries</h1>
+<p class="muted">Every enabled dictionary applies to every preprocessed request. Duplicate terms resolve name &gt; term &gt; english.</p>
+<table>
+  <thead><tr><th>Name</th><th>Kind</th><th>Entries</th><th>Status</th><th>Updated</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for d in dictionaries %}
+    <tr>
+      <td><a href="{{ u('admin_dictionary', dictionary_id=d.id) }}">{{ d.name }}</a><div class="muted small">{{ d.description }}</div></td>
+      <td>{{ d.kind }}</td><td>{{ d.entry_count }}</td>
+      <td>{% if d.enabled %}<span class="badge ok">enabled</span>{% else %}<span class="badge">disabled</span>{% endif %}</td>
+      <td>{{ d.updated_at|ts }}</td>
+      <td class="actions">
+        <a href="{{ u('admin_dictionary_export', dictionary_id=d.id) }}">Export</a>
+        {% if user.is_admin %}
+        <form method="post" action="{{ u('admin_dictionary_toggle', dictionary_id=d.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="secondary">{{ 'Disable' if d.enabled else 'Enable' }}</button>
+        </form>
+        <form method="post" action="{{ u('admin_dictionary_delete', dictionary_id=d.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="danger" data-confirm="Delete dictionary {{ d.name }} and all its entries?">Delete</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+  {% else %}
+    <tr><td colspan="6" class="muted">No dictionaries.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<section class="card">
+  <h2>Preview</h2>
+  <form hx-post="{{ u('admin_dictionaries_preview') }}" hx-target="#preview-result" class="row">
+    <label class="grow">Sentence <input name="text" maxlength="2000" required placeholder="Harry về Hogwarts ở Scotland."></label>
+    <label>Using <select name="dictionary_id"><option value="">all enabled</option>
+      {% for d in dictionaries %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}</select></label>
+    <button type="submit">Preview</button>
+  </form>
+  <div id="preview-result" aria-live="polite"></div>
+</section>
+
+{% if user.is_admin %}
+<div class="grid">
+  <section class="card">
+    <h2>New dictionary</h2>
+    <form method="post" action="{{ u('admin_dictionaries_create') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label>Name <input name="name" maxlength="80" required></label>
+      <label>Kind <select name="kind">{% for k in kinds %}<option value="{{ k }}">{{ k }}</option>{% endfor %}</select></label>
+      <label>Description <input name="description" maxlength="500"></label>
+      <button type="submit">Create</button>
+    </form>
+  </section>
+  <section class="card">
+    <h2>Import JSON</h2>
+    <form method="post" action="{{ u('admin_dictionaries_import') }}" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label>File (vieneu-dictionary/1, max 5 MB) <input type="file" name="file" accept=".json,application/json" required></label>
+      <fieldset>
+        <label class="check"><input type="radio" name="action" value="new" checked> New dictionary</label>
+        <label class="check"><input type="radio" name="action" value="merge"> Merge into</label>
+        <label class="check"><input type="radio" name="action" value="replace"> Replace entries of</label>
+      </fieldset>
+      <label>Target dictionary <select name="dictionary_id"><option value="">(for merge / replace)</option>
+        {% for d in dictionaries %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}</select></label>
+      <label>Name override (new only) <input name="name" maxlength="80"></label>
+      <button type="submit">Import</button>
+    </form>
+  </section>
+</div>
+{% endif %}
+{% endblock %}

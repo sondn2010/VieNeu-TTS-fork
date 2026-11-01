@@ -383,6 +383,18 @@ Endpoints: `POST /v1/audio/speech`, `GET /v1/models`, `GET /v1/voices`, `POST /v
 
 📊 **[docs/streaming.md](docs/streaming.md)** — every measurement on an RTX 3060 (TTFA / RTF / streams vs `max_streams`), estimates for smaller GPUs, the CPU numbers, and tuning notes (e.g. the first request after the GPU idles pays +100–300 ms until it clocks up).
 
+### Admin web app
+
+The streaming API also serves an admin app at `http://localhost:8000/admin`: users and their API keys, global pronunciation dictionaries (JSON import/export, seven ready seed sets), a **Script Lab** that turns a story into a multi-voice TTS script and renders a preview, and an in-app Help page. API requests can opt in to the story preprocessor with `"preprocess": true`, and any text may carry numeric pause tags such as `[0.5]` (0–5 s).
+
+> ⚠️ **Breaking change:** with the admin app on (default), **every** `/v1/*` call needs a key — create one at `/admin/keys` (`api_key="vn_..."` instead of `"x"` above) or set `VIENEU_API_KEY`. `VIENEU_ADMIN=0` restores the old keyless API. A fresh database (e.g. a new Docker `vieneu_data` volume) needs `VIENEU_ADMIN_USER` and `VIENEU_ADMIN_PASSWORD` on the first start, or the server refuses to start.
+
+```bash
+VIENEU_ADMIN_USER=admin VIENEU_ADMIN_PASSWORD='change-me-please' uv run python -m apps.openai_speech
+```
+
+📘 **[docs/user-guide.md](docs/user-guide.md)** — log in, API keys, `curl` / OpenAI SDK calls, Script Lab, dictionaries, troubleshooting. 🛠️ **[docs/web-admin-functions.md](docs/web-admin-functions.md)** — every route and role, environment variables, database and backups, pause tags, dictionary format, preprocessor rules, CLI, security.
+
 ### Web UI in Docker
 
 ```bash

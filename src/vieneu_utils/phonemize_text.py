@@ -275,11 +275,13 @@ def normalize_to_chunks(
     Normalize theo từng câu cũng giữ input cho bộ regex backtracking của
     normalizer ở mức an toàn với văn bản cỡ DOCX.
     """
-    from vieneu_utils.core_utils import pack_sentences_into_chunks
+    from vieneu_utils.core_utils import pack_sentences_into_chunks, strip_pause_tags
 
     if not text:
         return []
 
+    # Đường v1/v2 không mang được khoảng nghỉ tường minh: thẻ [x.xx] -> ranh giới câu.
+    text = strip_pause_tags(text)
     chunks: list[str] = []
     for sentences in _normalized_sentences_by_para(text, skip_normalize=skip_normalize):
         chunks.extend(pack_sentences_into_chunks(sentences, max_chars=max_chars))
@@ -302,9 +304,16 @@ def normalize_to_chunks_v3(
 
     Trả về list TEXT chunk (mỗi chunk có thể chứa ``<|emotion_k|>``); caller
     phonemize từng chunk bằng :func:`phonemize_text_with_emotions`.
+
+    Không có gaps để mang khoảng nghỉ, nên thẻ nghỉ ``[x.xx]`` bị xoá và thay bằng
+    ranh giới câu (:func:`~vieneu_utils.core_utils.strip_pause_tags`) — không bao
+    giờ bị đọc thành lời.
     """
-    return normalize_to_chunks_v3_with_gaps(
-        text, max_chars=max_chars, min_chunk_chars=min_chunk_chars
+    from vieneu_utils.core_utils import strip_pause_tags
+
+    return normalize_to_chunks_v3_with_pauses(
+        strip_pause_tags(text),
+        max_chars=max_chars, min_chunk_chars=min_chunk_chars,
     )[0]
 
 
@@ -316,9 +325,14 @@ def _effective_len(chunk: str) -> int:
     return len(_EMOTION_TOKEN_RE.sub("", chunk).strip())
 
 
+def _is_explicit_pause(gap) -> bool:
+    """Gap là khoảng nghỉ tường minh (số giây từ thẻ ``[x.xx]``), không phải loại ranh giới."""
+    return not isinstance(gap, str)
+
+
 def _merge_short_chunks(
-    chunks: list[str], gaps: list[str], min_chars: int
-) -> tuple[list[str], list[str]]:
+    chunks: list[str], gaps: list, min_chars: int
+) -> tuple[list[str], list]:
     """Gộp chunk ngắn hơn ``min_chars`` vào chunk kề, cập nhật ``gaps`` tương ứng.
 
     Chunk 1-2 từ (thường là dòng tiêu đề/thoại cụt sau khi tách theo newline) đứng
@@ -330,18 +344,25 @@ def _merge_short_chunks(
 
     Chunk gộp có thể vượt ``max_chars`` tối đa ``min_chars + 1`` ký tự. Chunk đơn
     độc (toàn văn bản quá ngắn) giữ nguyên — trần frame theo phoneme lo phần đó.
+
+    Ranh giới là khoảng nghỉ TƯỜNG MINH (gap kiểu số, từ thẻ ``[x.xx]``) không bao
+    giờ bị gộp xuyên qua — gộp sẽ làm mất khoảng nghỉ người viết yêu cầu. Chunk
+    ngắn bị kẹp giữa hai khoảng nghỉ tường minh được giữ nguyên.
     """
+    def _sides(i: int) -> list:
+        sides = []                                   # (ưu_tiên, side)
+        if i < len(chunks) - 1 and not _is_explicit_pause(gaps[i]):
+            sides.append(((gaps[i] != "para", -len(chunks[i + 1])), "R"))
+        if i > 0 and not _is_explicit_pause(gaps[i - 1]):
+            sides.append(((gaps[i - 1] != "para", -len(chunks[i - 1])), "L"))
+        return sides
+
     while len(chunks) > 1:
-        short = [i for i, c in enumerate(chunks) if _effective_len(c) < min_chars]
+        short = [i for i, c in enumerate(chunks) if _effective_len(c) < min_chars and _sides(i)]
         if not short:
             break
         i = min(short, key=lambda k: _effective_len(chunks[k]))
-        sides = []                                   # (ưu_tiên, side)
-        if i < len(chunks) - 1:
-            sides.append(((gaps[i] != "para", -len(chunks[i + 1])), "R"))
-        if i > 0:
-            sides.append(((gaps[i - 1] != "para", -len(chunks[i - 1])), "L"))
-        side = max(sides, key=lambda t: t[0])[1]     # hoà -> "R" (đứng trước)
+        side = max(_sides(i), key=lambda t: t[0])[1]  # hoà -> "R" (đứng trước)
         if side == "R":
             chunks[i] = chunks[i] + " " + chunks.pop(i + 1)
             gaps.pop(i)
@@ -351,16 +372,9 @@ def _merge_short_chunks(
     return chunks, gaps
 
 
-def normalize_to_chunks_v3_with_gaps(
-    text: str, max_chars: int = 256, min_chunk_chars: int = 20
-) -> tuple[list[str], list[str]]:
-    """Như :func:`normalize_to_chunks_v3` nhưng trả kèm loại ranh giới GIỮA các
-    chunk để ghép audio nghỉ dài/ngắn theo ngữ cảnh.
-
-    Trả về ``(chunks, gaps)`` với ``gaps[i] in {"para","sentence","minor"}`` là
-    ranh giới giữa ``chunks[i]`` và ``chunks[i+1]`` (``len(gaps) == len(chunks)-1``).
-    Dùng với :func:`vieneu_utils.core_utils.gaps_to_silence` +
-    ``join_audio_chunks(..., silence_ps=...)``.
+def _chunk_v3_segment(text: str, max_chars: int) -> tuple[list[str], list[str]]:
+    """Chia MỘT đoạn text (không còn thẻ nghỉ) thành chunk đã ``punc_norm`` + loại
+    ranh giới ``para|sentence|minor`` giữa chúng (chưa gộp chunk ngắn).
 
     Ranh giới ``sentence``/``minor`` được phân loại LẠI trên chunk ĐÃ ``punc_norm``
     (punc_norm có thể ép dấu cuối cho câu ngắn) để khớp intonation audio thật;
@@ -368,7 +382,7 @@ def normalize_to_chunks_v3_with_gaps(
     """
     from vieneu_utils.core_utils import pack_sentences_into_chunks, _classify_gap
 
-    if not text:
+    if not text or not text.strip():
         return [], []
 
     keep_cues = "[" in text or "<|emotion_" in text
@@ -387,9 +401,82 @@ def normalize_to_chunks_v3_with_gaps(
 
     chunks = [punc_norm(c) for c in chunks]
     gaps = [g if g == "para" else _classify_gap(chunks[i]) for i, g in enumerate(gaps)]
+    return chunks, gaps
+
+
+def normalize_to_chunks_v3_with_pauses(
+    text: str, max_chars: int = 256, min_chunk_chars: int = 20
+) -> tuple[list[str], list, float, float]:
+    """Chia chunk v3 kèm ranh giới GIỮA các chunk và khoảng nghỉ tường minh hai đầu.
+
+    Trả về ``(chunks, gaps, lead_silence_s, tail_silence_s)``:
+
+    * ``gaps[i]`` là ranh giới giữa ``chunks[i]`` và ``chunks[i+1]`` —
+      ``len(gaps) == max(0, len(chunks) - 1)`` LUÔN đúng. Phần tử là chuỗi
+      ``"para"|"sentence"|"minor"`` (ranh giới tự nhiên) hoặc ``float`` (giây,
+      khoảng nghỉ tường minh từ thẻ ``[x.xx]``, đã kẹp 0–5 s).
+    * ``lead_silence_s`` / ``tail_silence_s``: khoảng nghỉ của thẻ đứng TRƯỚC chunk
+      đầu / SAU chunk cuối (``"[1.0] Xin chào [0.5]"`` -> 1.0 / 0.5). Không có
+      chunk nào (``"[2.0]"``) thì toàn bộ khoảng nghỉ nằm ở ``lead_silence_s`` và
+      ``tail_silence_s == 0``.
+
+    Text được tách theo thẻ nghỉ TRƯỚC (:func:`~vieneu_utils.core_utils.split_pause_tags`),
+    mỗi segment chia chunk như cũ, rồi nối với khoảng nghỉ tường minh làm gap; thẻ
+    không bao giờ xuất hiện trong text chunk. Chunk ngắn được gộp (xem
+    :func:`_merge_short_chunks`) nhưng KHÔNG gộp xuyên khoảng nghỉ tường minh.
+    Text không có thẻ cho kết quả y hệt bản trước khi có thẻ nghỉ.
+
+    Dùng với :func:`vieneu_utils.core_utils.gaps_to_silence` +
+    ``join_audio_chunks(..., silence_ps=...)``.
+    """
+    from vieneu_utils.core_utils import split_pause_tags, clamp_pause
+
+    if not text:
+        return [], [], 0.0, 0.0
+
+    segments, pauses = split_pause_tags(text)
+    chunks: list[str] = []
+    gaps: list = []
+    lead = 0.0
+    pending = 0.0        # khoảng nghỉ tường minh đang chờ chunk kế tiếp
+    for k, seg in enumerate(segments):
+        if k > 0:
+            # Segment rỗng giữa hai thẻ: các khoảng nghỉ dồn về cùng một ranh giới.
+            pending = clamp_pause(pending + pauses[k - 1])
+        seg_chunks, seg_gaps = _chunk_v3_segment(seg, max_chars)
+        if not seg_chunks:
+            continue
+        if chunks:
+            gaps.append(pending)
+        else:
+            lead = pending
+        pending = 0.0
+        chunks.extend(seg_chunks)
+        gaps.extend(seg_gaps)
+
+    if not chunks:
+        return [], [], pending, 0.0
     # Gộp SAU punc_norm: từng mảnh đã chốt dấu câu cuối nên text gộp giữ nguyên
     # ngữ điệu ("Chương một. Nội dung..."); gap của các ranh giới còn lại không đổi.
-    return _merge_short_chunks(chunks, gaps, min_chunk_chars)
+    chunks, gaps = _merge_short_chunks(chunks, gaps, min_chunk_chars)
+    return chunks, gaps, lead, pending
+
+
+def normalize_to_chunks_v3_with_gaps(
+    text: str, max_chars: int = 256, min_chunk_chars: int = 20
+) -> tuple[list[str], list]:
+    """Như :func:`normalize_to_chunks_v3_with_pauses` nhưng chỉ trả ``(chunks, gaps)``.
+
+    Giữ chữ ký 2-phần-tử cho các caller cũ (Gradio, v3 Nano, chuẩn bị dataset).
+    ``gaps`` vẫn có thể chứa ``float`` (khoảng nghỉ tường minh giữa chunk) —
+    :func:`~vieneu_utils.core_utils.gaps_to_silence` hiểu cả hai dạng. Khoảng nghỉ
+    ở ĐẦU/CUỐI text không có chỗ trong ``gaps`` nên bị bỏ (thẻ vẫn không bị đọc);
+    caller cần chúng dùng :func:`normalize_to_chunks_v3_with_pauses`.
+    """
+    chunks, gaps, _lead, _tail = normalize_to_chunks_v3_with_pauses(
+        text, max_chars=max_chars, min_chunk_chars=min_chunk_chars
+    )
+    return chunks, gaps
 
 
 def phonemize_to_chunks(
@@ -413,10 +500,16 @@ def phonemize_to_chunks(
     an toàn với văn bản cỡ lớn. ``source_max_chars`` được giữ cho tương thích chữ
     ký nhưng không còn dùng (việc cắt theo độ dài giờ làm ở tầng phoneme).
     """
-    from vieneu_utils.core_utils import split_into_chunks_v2
+    from vieneu_utils.core_utils import split_into_chunks_v2, strip_pause_tags
 
     if not text:
         return []
+
+    # Đường v1/v2 không mang được khoảng nghỉ tường minh: thẻ [x.xx] -> ranh giới câu.
+    stripped = strip_pause_tags(text)
+    if stripped is not text and not stripped.strip():
+        return []                    # text chỉ gồm thẻ nghỉ: không có gì để đọc
+    text = stripped
 
     if skip_normalize:
         normalized_units = [text]

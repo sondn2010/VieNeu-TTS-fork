@@ -1,0 +1,36 @@
+<p class="muted">{{ chunk_count }} chunk(s), {{ speakers|length }} speaker(s).
+  <a href="{{ u('admin_script_lab_download') }}">Download JSON</a></p>
+<details open class="card"><summary>Script</summary><pre class="output">{{ result.script }}</pre></details>
+<details class="card"><summary>JSON</summary><pre class="output">{{ chunks_json }}</pre></details>
+<details class="card"><summary>Tagged text</summary><pre class="output">{{ result.to_tagged_text() }}</pre></details>
+
+<section class="card">
+  <h2>Render preview</h2>
+  {% if not engine_available %}
+    <p class="alert warn">Engine not loaded.</p>
+  {% elif not renderable %}
+    <p class="alert warn">In-app rendering is limited to {{ "{:,}".format(max_render) }} characters; use the vieneu-preprocess CLI for longer texts.</p>
+  {% else %}
+  <form hx-post="{{ u('admin_script_lab_render') }}" hx-include="#lab-text" hx-target="#render-result"
+        hx-indicator="#render-busy" hx-disabled-elt="find button">
+    <table>
+      <thead><tr><th>Speaker</th><th>Voice</th></tr></thead>
+      <tbody>
+      {% for s in speakers %}
+        <tr><td>{{ s }}<input type="hidden" name="speaker" value="{{ s }}"></td>
+          <td><select name="voice"><option value="">default</option>
+            {% for v in voices %}<option value="{{ v }}">{{ v }}</option>{% endfor %}</select></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <fieldset class="row">
+      <legend>Format</legend>
+      <label class="check"><input type="radio" name="fmt" value="wav" checked> WAV</label>
+      <label class="check"><input type="radio" name="fmt" value="flac"> FLAC</label>
+    </fieldset>
+    <button type="submit">Render audio</button>
+    <span id="render-busy" class="htmx-indicator muted">Rendering…</span>
+  </form>
+  {% endif %}
+  <div id="render-result" aria-live="polite"></div>
+</section>

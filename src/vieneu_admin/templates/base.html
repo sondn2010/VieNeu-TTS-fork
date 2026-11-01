@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="htmx-config" content='{"includeIndicatorStyles": false, "allowEval": false, "allowScriptTags": false}'>
+  <title>{% block title %}VieNeu Admin{% endblock %} · VieNeu</title>
+  <link rel="stylesheet" href="{{ u('admin_static', name='app.css') }}">
+  <script src="{{ u('admin_static', name='htmx.min.js') }}" defer></script>
+  <script src="{{ u('admin_static', name='app.js') }}" defer></script>
+</head>
+<body hx-headers='{"X-CSRF-Token": "{{ csrf_token }}"}'>
+  <header class="topbar">
+    <a class="brand" href="{{ u('admin_dashboard') }}">VieNeu Admin</a>
+    {% if user %}
+    <nav>
+      <a href="{{ u('admin_dashboard') }}">Dashboard</a>
+      <a href="{{ u('admin_keys') }}">API keys</a>
+      <a href="{{ u('admin_dictionaries') }}">Dictionaries</a>
+      <a href="{{ u('admin_script_lab') }}">Script Lab</a>
+      {% if user.is_admin %}<a href="{{ u('admin_users') }}">Users</a>{% endif %}
+      <a href="{{ u('admin_help') }}?doc=guide&amp;lang=en">Help</a>
+      <span class="lang">
+        <a href="{{ u('admin_help') }}?doc={{ doc|default('guide') }}&amp;lang=en">EN</a> /
+        <a href="{{ u('admin_help') }}?doc={{ doc|default('guide') }}&amp;lang=vi">VI</a>
+      </span>
+    </nav>
+    <div class="who">
+      <a href="{{ u('admin_account_password') }}">{{ user.username }}</a>
+      <span class="badge">{{ user.role }}</span>
+      <form method="post" action="{{ u('admin_logout') }}" class="inline">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" class="link">Log out</button>
+      </form>
+    </div>
+    {% endif %}
+  </header>
+  <main>
+    {% if error %}<p class="alert error" role="alert">{{ error }}</p>{% endif %}
+    {% if message %}<p class="alert ok" role="status">{{ message }}</p>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

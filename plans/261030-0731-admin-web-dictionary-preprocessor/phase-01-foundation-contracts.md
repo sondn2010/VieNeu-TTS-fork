@@ -1,7 +1,7 @@
 ---
 phase: 1
 title: "Foundation: packaging and shared contracts"
-status: pending
+status: completed
 priority: P1
 effort: "3h"
 dependencies: []
@@ -91,15 +91,17 @@ JSON file shape (one dictionary per file):
 ```
 
 Validation rules: `format` must equal `vieneu-dictionary/1`; `name` 1–80 chars; `kind` in the three values; `term` 1–80 chars, unique per dictionary (case-folded unless `case_sensitive`); `replacement` ≤ 200 chars and must not contain `[`, `]`, `<|`, `|>` or any `<tag>` (the `en` mode adds `<en>` itself); max 20 000 entries. `json.JSONDecodeError` maps to `DictionaryFormatError(line, column)`; schema errors carry a JSON path such as `entries[12].term`.
+<!-- red-team finding 7: lexicon term regex safety -->
+In addition, `term` must be safe for regex compilation; all terms will be escaped via `re.escape()` in mapper stages to prevent regex syntax errors or ReDoS on technical terms containing symbols (e.g. `C++`, `C#`, `.NET`).
 
 `merge_lexicon` precedence on duplicate terms: `name` > `term` > `english`; ties keep the first dictionary by name order. Disabled dictionaries are skipped.
 
 ## Tasks & Steps
 
 - [ ] Edit `pyproject.toml` and `.gitignore` as listed; run `uv lock` and confirm only the explicit-dependency markers change.
-- [ ] Write `types.py` and the `__init__.py` stubs exactly as the contracts above.
-- [ ] Implement `dictionary_schema.py` with the validation rules.
-- [ ] Tests: round-trip, every rejection rule, line/column on broken JSON, precedence in `merge_lexicon`, disabled skip.
+- [x] Write `types.py` and the `__init__.py` stubs exactly as the contracts above.
+- [x] Implement `dictionary_schema.py` with the validation rules.
+- [x] Tests: round-trip, every rejection rule, line/column on broken JSON, precedence in `merge_lexicon`, disabled skip.
 
 ## Verification
 

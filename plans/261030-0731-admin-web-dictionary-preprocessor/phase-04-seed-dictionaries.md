@@ -1,7 +1,7 @@
 ---
 phase: 4
 title: "Seed dictionaries"
-status: pending
+status: completed
 priority: P2
 effort: "4h"
 dependencies: [1]
@@ -21,16 +21,17 @@ Ship a ready-to-use set of dictionaries in the phase 1 JSON format, loaded on fi
   - `it-terms.json` (kind `term`, ≥ 80): Docker, Kubernetes, GitHub, Python, JavaScript, backend, frontend, server, database, cloud, DevOps, framework…; use `en` mode where v3 Turbo reads English well, `phonetic` where it does not.
   - `business-finance.json` (kind `term`, ≥ 60): KPI, ROI, startup, marketing, branding, e-commerce, Fintech, stock tickers style terms, VN-Index, IPO…
   - `medical.json` (kind `term`, ≥ 60): COVID-19, vaccine, virus, MRI, CT scan, ICU, ADN/DNA, insulin, paracetamol, đơn vị như mg, ml, mmHg…
-  - `fantasy-ash-land.json` (kind `name`, mode `phonetic`): every name from spec §4.4 (`Udûn-gath` → `U-đun gát`, `Gorgûl` → `Go-gun`, `Muzgash` → `Mút-gát`, `Gorgoroth` → `Go-gô-rốt`, `Dorwinion` → `Đo-uy-ni-on`, `Ephel Dúath` → `Ê-phen Đu-át`, `Lugbúrz` → `Lúc-bua`) plus the remaining names in the spec text.
-  - `fantasy-hogwarts.json` (kind `name`): spec §4.4 Hogwarts list plus the names used in spec §5 (`Hogwarts` → `Hốc-goát`, `Hagrid` → `Ha-gờ-rít`, `Malfoy` → `Man-phôi`, `Harry` → `Ha-ri`, `Potter` → `Pót-tơ`, `Dracaena` → `Đờ-ra-xê-na`, `Gryffindor` → `Gờ-ríp-phin-đo`, `Slytherin` → `Sờ-li-thơ-rin`, `McGonagall` → `Mắc-go-na-gôn`, …) and `Scotland` in `en` mode.
+  - `fantasy-ash-land.json` (kind `name`, mode `phonetic`, `enabled: true`): every name from spec §4.4 (`Udûn-gath` → `U-đun gát`, `Gorgûl` → `Go-gun`, `Muzgash` → `Mút-gát`, `Gorgoroth` → `Go-gô-rốt`, `Dorwinion` → `Đo-uy-ni-on`, `Ephel Dúath` → `Ê-phen Đu-át`, `Lugbúrz` → `Lúc-bua`) plus the remaining names in the spec text.
+  - `fantasy-hogwarts.json` (kind `name`, `enabled: true`): spec §4.4 Hogwarts list plus the names used in spec §5 (`Hogwarts` → `Hốc-goát`, `Hagrid` → `Ha-gờ-rít`, `Malfoy` → `Man-phôi`, `Harry` → `Ha-ri`, `Potter` → `Pót-tơ`, `Dracaena` → `Đờ-ra-xê-na`, `Gryffindor` → `Gờ-ríp-phin-đo`, `Slytherin` → `Sờ-li-thơ-rin`, `McGonagall` → `Mắc-go-na-gôn`, …) and `Scotland` in `en` mode.
+<!-- Updated: Validation Session 2 - all seed dictionaries enabled by default for out-of-the-box story demos -->
 - Create: `tests/test_seed_dictionaries.py`.
 
 ## Tasks & Steps
 
-- [ ] Write each file with `format`, `name`, `kind`, `enabled: true`, a one-line `description` (Vietnamese), and entries; add a `note` only when a spelling choice is non-obvious.
-- [ ] Keep spellings syllable-hyphenated and in standard Vietnamese orthography so sea-g2p reads them as Vietnamese.
-- [ ] Avoid terms that are ordinary Vietnamese words when lower-cased (e.g. do not map `TO`, `AN`, `CON`); keep acronyms `case_sensitive: true`.
-- [ ] Test: every file loads via `load_dictionary_json`, minimum counts hold, names are unique across files, `merge_lexicon` across all seeds has no conflicting duplicate within the same kind.
+- [x] Write each file with `format`, `name`, `kind`, `enabled: true` for all seed dictionaries (ready out-of-the-box for story demos), a one-line `description` (Vietnamese), and entries; add a `note` only when a spelling choice is non-obvious.
+- [x] Keep spellings syllable-hyphenated and in standard Vietnamese orthography so sea-g2p reads them as Vietnamese.
+- [x] Avoid terms that are ordinary Vietnamese words when lower-cased (e.g. do not map `TO`, `AN`, `CON`); keep acronyms `case_sensitive: true`.
+- [x] Test: every file loads via `load_dictionary_json`, minimum counts hold, names are unique across files, `merge_lexicon` across all seeds has no conflicting duplicate within the same kind.
 
 ## Verification
 

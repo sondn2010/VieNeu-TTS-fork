@@ -58,6 +58,7 @@ services:
   #   docker compose -f docker/docker-compose.yml --profile api-gpu up   # RTX: 16 streams
   #   docker compose -f docker/docker-compose.yml --profile api-cpu up   # no GPU: 1-2 streams
   #   -> POST http://localhost:8000/v1/audio/speech  (docs/streaming.vi.md)
+  #   -> admin web app (users, API keys, dictionaries): http://localhost:8000/admin
   # ========================================================
   api-gpu:
     profiles: ["api-gpu"]
@@ -79,11 +80,19 @@ services:
       - VIENEU_QUEUE_TIMEOUT=${VIENEU_QUEUE_TIMEOUT:-10}
       - VIENEU_API_KEY=${VIENEU_API_KEY:-}
       - VIENEU_WATERMARK=${VIENEU_WATERMARK:-1}
+      # Admin app at /admin (VIENEU_ADMIN=0 turns it off: keyless API as before).
+      # A fresh vieneu_data volume needs VIENEU_ADMIN_USER/PASSWORD or startup aborts.
+      - VIENEU_ADMIN=${VIENEU_ADMIN:-1}
+      - VIENEU_ADMIN_USER=${VIENEU_ADMIN_USER:-}
+      - VIENEU_ADMIN_PASSWORD=${VIENEU_ADMIN_PASSWORD:-}
+      - VIENEU_COOKIE_SECURE=${VIENEU_COOKIE_SECURE:-0}
+      - FORWARDED_ALLOW_IPS=${FORWARDED_ALLOW_IPS:-127.0.0.1}
     env_file:
       - path: .env
         required: false
     volumes:
       - huggingface_cache:/home/app/.cache/huggingface
+      - vieneu_data:/workspace/vieneu_data   # users, API keys, dictionaries (SQLite)
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status == 200 else 1)"]
       interval: 15s
@@ -119,11 +128,19 @@ services:
       - VIENEU_QUEUE_TIMEOUT=${VIENEU_QUEUE_TIMEOUT:-10}
       - VIENEU_API_KEY=${VIENEU_API_KEY:-}
       - VIENEU_WATERMARK=${VIENEU_WATERMARK:-1}
+      # Admin app at /admin (VIENEU_ADMIN=0 turns it off: keyless API as before).
+      # A fresh vieneu_data volume needs VIENEU_ADMIN_USER/PASSWORD or startup aborts.
+      - VIENEU_ADMIN=${VIENEU_ADMIN:-1}
+      - VIENEU_ADMIN_USER=${VIENEU_ADMIN_USER:-}
+      - VIENEU_ADMIN_PASSWORD=${VIENEU_ADMIN_PASSWORD:-}
+      - VIENEU_COOKIE_SECURE=${VIENEU_COOKIE_SECURE:-0}
+      - FORWARDED_ALLOW_IPS=${FORWARDED_ALLOW_IPS:-127.0.0.1}
     env_file:
       - path: .env
         required: false
     volumes:
       - huggingface_cache:/home/app/.cache/huggingface
+      - vieneu_data:/workspace/vieneu_data   # users, API keys, dictionaries (SQLite)
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status == 200 else 1)"]
       interval: 15s
@@ -168,3 +185,4 @@ services:
 
 volumes:
   huggingface_cache:
+  vieneu_data:

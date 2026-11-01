@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ dictionary.name }}{% endblock %}
+{% block content %}
+<p><a href="{{ u('admin_dictionaries') }}">&larr; All dictionaries</a></p>
+<h1>{{ dictionary.name }} <span class="badge">{{ dictionary.kind }}</span>
+  {% if dictionary.enabled %}<span class="badge ok">enabled</span>{% else %}<span class="badge">disabled</span>{% endif %}</h1>
+<p class="muted">{{ dictionary.description }}</p>
+<p><a href="{{ u('admin_dictionary_export', dictionary_id=dictionary.id) }}">Export JSON</a></p>
+
+{% if user.is_admin %}
+<details class="card">
+  <summary>Rename / describe</summary>
+  <form method="post" action="{{ u('admin_dictionary_rename', dictionary_id=dictionary.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label>Name <input name="name" value="{{ dictionary.name }}" maxlength="80" required></label>
+    <label>Description <input name="description" value="{{ dictionary.description }}" maxlength="500"></label>
+    <button type="submit">Save</button>
+  </form>
+</details>
+{% endif %}
+
+<form class="row" method="get" action="{{ u('admin_dictionary', dictionary_id=dictionary.id) }}"
+      hx-get="{{ u('admin_dictionary', dictionary_id=dictionary.id) }}" hx-target="#entries-panel"
+      hx-trigger="submit, input changed delay:400ms from:find input" hx-push-url="true">
+  <label class="grow">Search <input name="q" value="{{ q }}" maxlength="80" type="search"></label>
+  <button type="submit">Search</button>
+</form>
+
+<div id="entries-panel">{% include "partials/entries_panel.html" %}</div>
+{% endblock %}

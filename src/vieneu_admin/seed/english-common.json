@@ -1,0 +1,1374 @@
+{
+  "format": "vieneu-dictionary/1",
+  "name": "Tiếng Anh thông dụng",
+  "kind": "english",
+  "enabled": true,
+  "description": "Từ tiếng Anh đời thường và truyền thông hay chen trong văn bản tiếng Việt, đọc bằng giọng Anh.",
+  "entries": [
+    {
+      "term": "limited edition",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "work from home",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "breaking news",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "reality show",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "black friday",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "best seller",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fan meeting",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "flash sale",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "video call",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "power bank",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "soft skill",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fast food",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fair play",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "smart TV",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hip hop",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "email",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "online",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "offline",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "livestream",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "deadline",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "meeting",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "team",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "teamwork",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "feedback",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "update",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "download",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "upload",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "smartphone",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "laptop",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "website",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "app",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "game",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "gamer",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "check-in",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "check-out",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "checkout",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "shopping",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "sale",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "voucher",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "coupon",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "freeship",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "shipper",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "order",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "booking",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "combo",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "deal",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "size",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "shop",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "store",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "brand",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "outfit",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "style",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fashion",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "makeup",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "skincare",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "selfie",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "video",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "clip",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "vlog",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "vlogger",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "blog",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "blogger",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "youtuber",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "tiktoker",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "influencer",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "idol",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fan",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fanpage",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fandom",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hashtag",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "trend",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "trending",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "viral",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "content",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "creator",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "follow",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "follower",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "like",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "share",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "comment",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "inbox",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "chat",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "status",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "story",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "post",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "profile",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "avatar",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "link",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "password",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "account",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "login",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "logout",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "internet",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "wifi",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "bluetooth",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "tablet",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "smartwatch",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "headphone",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "camera",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "office",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "workshop",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "seminar",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "event",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "party",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "show",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "talkshow",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "gameshow",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "concert",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "festival",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "tour",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "travel",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "resort",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "homestay",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "villa",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "spa",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "gym",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fitness",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "yoga",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "workout",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cardio",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "diet",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "detox",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "healthy",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "snack",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "pizza",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "burger",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hamburger",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "sandwich",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "salad",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "sushi",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "steak",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "buffet",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "brunch",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "menu",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "topping",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "latte",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cappuccino",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "espresso",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "smoothie",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cocktail",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "bartender",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "barista",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "chef",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "manager",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "leader",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "boss",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "staff",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "intern",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "fresher",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "junior",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "senior",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "freelancer",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "freelance",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "part-time",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "full-time",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "overtime",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "remote",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hybrid",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "interview",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "portfolio",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "offer",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "onboarding",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "training",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "coaching",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "mentor",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "coach",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "skill",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "teambuilding",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "brainstorm",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "plan",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "planning",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "project",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "task",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "report",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "presentation",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "slide",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "template",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "file",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "folder",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "note",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "checklist",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "schedule",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "agenda",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "call",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "news",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "podcast",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "playlist",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "single",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "album",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "remix",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cover",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hit",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "rapper",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "rap",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "ballad",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "live",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "showcase",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "comeback",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "debut",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "concept",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "teaser",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "trailer",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "spoiler",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "review",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "reviewer",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "unboxing",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "ranking",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "hot",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cool",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "vibe",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "mood",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "chill",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "crush",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "dating",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "couple",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "marathon",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "golf",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "tennis",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "badminton",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "esports",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "penalty",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "derby",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "mall",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "supermarket",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "outlet",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "showroom",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "minimart",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "cashback",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "payment",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "refund",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "membership",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "pre-order",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "case",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "sticker",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "emoji",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "meme",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "screenshot",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "notification",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "setting",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "version",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "premium",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "free",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "trial",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "subscribe",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "unsubscribe",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "channel",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "streamer",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "stream",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "streaming",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Facebook",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "YouTube",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "TikTok",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Instagram",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Messenger",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gmail",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Google",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Shopee",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lazada",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Grab",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Netflix",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Spotify",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "iPhone",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "iPad",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Samsung",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Apple",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Twitter",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Telegram",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "WhatsApp",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Viber",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Uber",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Amazon",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Tesla",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Zoom",
+      "mode": "en",
+      "case_sensitive": false
+    }
+  ]
+}

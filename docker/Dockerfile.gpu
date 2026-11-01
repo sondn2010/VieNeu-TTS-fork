@@ -15,7 +15,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
     HF_HOME=/home/app/.cache/huggingface \
     GRADIO_SERVER_NAME=0.0.0.0 \
     GRADIO_SERVER_PORT=7860 \
-    GRADIO_SHARE=0
+    GRADIO_SHARE=0 \
+    VIENEU_DOCS_DIR=/workspace/docs \
+    VIENEU_ADMIN_DB=/workspace/vieneu_data/admin.sqlite3
 
 # Python 3.12 + certificates only (no espeak, no compilers: every dependency ships wheels).
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -27,7 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-RUN useradd --create-home --uid 1000 app && mkdir -p /workspace /opt/venv && chown -R app:app /workspace /opt/venv
+RUN useradd --create-home --uid 1000 app && mkdir -p /workspace/vieneu_data /opt/venv && chown -R app:app /workspace /opt/venv
 WORKDIR /workspace
 
 # Dependencies only, wheels only (no setup.py execution), no project build: the app
@@ -46,6 +48,8 @@ COPY --chown=app:app src/ src/
 COPY --chown=app:app apps/ apps/
 COPY --chown=app:app config.yaml ./
 COPY --chown=app:app examples/audio_ref/ examples/audio_ref/
+# Help pages of the speech API's admin app (/admin/help) read these (VIENEU_DOCS_DIR).
+COPY --chown=app:app docs/ docs/
 USER app
 EXPOSE 7860
 CMD ["python", "apps/gradio_main.py"]

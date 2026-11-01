@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}API keys{% endblock %}
+{% block content %}
+<h1>API keys</h1>
+{% if new_key %}
+<section class="card highlight" id="new-key-panel">
+  <h2>New key "{{ new_key_name }}"</h2>
+  <p>Copy it now. It will <strong>not</strong> be shown again.</p>
+  <div class="copyrow">
+    <code id="new-key-value">{{ new_key }}</code>
+    <button type="button" data-copy="#new-key-value">Copy</button>
+    <button type="button" class="secondary" data-dismiss="#new-key-panel">Dismiss</button>
+  </div>
+</section>
+{% endif %}
+<section class="card">
+  <form method="post" action="{{ u('admin_keys_create') }}" class="row">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label>Key name <input name="name" maxlength="80" required placeholder="e.g. laptop script"></label>
+    <button type="submit">Create key</button>
+  </form>
+</section>
+<table>
+  <thead><tr>{% if show_owner %}<th>Owner</th>{% endif %}<th>Name</th><th>Prefix</th><th>Created</th><th>Last used</th><th>Status</th><th></th></tr></thead>
+  <tbody>
+  {% for k in keys %}
+    <tr>
+      {% if show_owner %}<td>{{ k.username }}</td>{% endif %}
+      <td>{{ k.name }}</td><td><code>{{ k.prefix }}…</code></td>
+      <td>{{ k.created_at|ts }}</td><td>{{ k.last_used_at|ts }}</td>
+      <td>{% if k.active %}<span class="badge ok">active</span>{% else %}<span class="badge">revoked {{ k.revoked_at|ts }}</span>{% endif %}</td>
+      <td>{% if k.active %}
+        <form method="post" action="{{ u('admin_keys_revoke', key_id=k.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="danger" data-confirm="Revoke key {{ k.name }}?">Revoke</button>
+        </form>{% endif %}
+      </td>
+    </tr>
+  {% else %}
+    <tr><td colspan="7" class="muted">No keys yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: help setup setup-gpu setup-cpu setup-finetune demo run stream docker-cpu docker-gpu docker-build-cpu docker-build-gpu check clean
+.PHONY: help setup setup-gpu setup-cpu setup-finetune demo run stream api docker-cpu docker-gpu docker-build-cpu docker-build-gpu check clean
 
 help:
 	@echo "Targets:"
@@ -10,6 +10,7 @@ help:
 	@echo "  make setup-finetune - + peft/accelerate: LoRA fine-tuning (uv sync --extra finetune)"
 	@echo "  make run            - run Gradio UI (alias for 'make demo')"
 	@echo "  make stream         - run legacy Web Stream UI (v1 CPU GGUF)"
+	@echo "  make api            - run the OpenAI-compatible speech API + admin app (:8000, /admin)"
 	@echo "  make docker-cpu     - docker compose --profile cpu (Web UI, torch-free)"
 	@echo "  make docker-gpu     - docker compose --profile gpu (Web UI, CUDA)"
 	@echo "  make clean          - clean artifacts (.venv, cache, ...)"
@@ -118,6 +119,10 @@ run: demo
 
 stream:
 	uv run vieneu-stream
+
+# First start on a fresh DB: VIENEU_ADMIN_USER=... VIENEU_ADMIN_PASSWORD=... make api
+api:
+	uv run python -m apps.openai_speech
 
 # --- Docker (auto-create .env if missing) ---
 docker-cpu:
