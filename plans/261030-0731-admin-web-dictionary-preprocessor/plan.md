@@ -7,13 +7,15 @@ effort: 48h
 branch: main-bkt
 tags: [feature, backend, frontend, api, auth, database, docs]
 blockedBy: []
-blocks: []
+blocks: [261102-0735-user-portal-foundation-and-studio]
 created: 2026-10-30
 ---
 
 # Admin web app, dictionaries and story preprocessor
 
 ## Overview
+
+> **Superseded (2026-11-02):** the SQLite admin app (`src/vieneu_admin/`, `/admin`) is replaced by the Postgres user portal in [261102-0735-user-portal-foundation-and-studio](../261102-0735-user-portal-foundation-and-studio/plan.md). The engine pause tags, story preprocessor (`vieneu_preprocess`) and seed dictionaries from this plan stay; seeds become the portal's system dictionary layer.
 
 One FastAPI process (`apps/openai_speech.py`) keeps serving the OpenAI-compatible speech API and also mounts an admin web app at `/admin`. Users log in to manage their own API keys. Admins manage users and global pronunciation dictionaries, and everyone can try the new spec-based story preprocessor in a Script Lab page. The engine learns numeric pause tags such as `[0.35]` so preprocessed scripts are playable anywhere. Two docs (app functions, user guide) ship in English and Vietnamese and are rendered by the in-app Help page.
 

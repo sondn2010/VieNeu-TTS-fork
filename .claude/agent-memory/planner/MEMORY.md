@@ -1,0 +1,1 @@
+- [Plan location and portal rewrite](project_plan_location_and_portal_rewrite.md) — plans in ./plans; SQLite admin -> Postgres portal rewrite in cycles C0-C5

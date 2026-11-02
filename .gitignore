@@ -24,3 +24,4 @@ merged_models_cache/
 
 # Admin web app data (SQLite)
 vieneu_data/
+/.claude/session-state/
