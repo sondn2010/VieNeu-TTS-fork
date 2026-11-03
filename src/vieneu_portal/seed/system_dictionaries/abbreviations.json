@@ -1,0 +1,986 @@
+{
+  "format": "vieneu-dictionary/1",
+  "name": "Từ viết tắt",
+  "kind": "term",
+  "enabled": true,
+  "description": "Cách đọc các từ viết tắt thông dụng: viết tắt tiếng Việt đọc theo tên chữ cái tiếng Việt, viết tắt quốc tế đọc theo thói quen của VTV.",
+  "entries": [
+    {
+      "term": "AI",
+      "replacement": "ây-ai",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "API",
+      "replacement": "ây-pi-ai",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CEO",
+      "replacement": "xi-i-âu",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CFO",
+      "replacement": "xi-ép-âu",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CTO",
+      "replacement": "xi-ti-âu",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "COO",
+      "replacement": "xi-âu-âu",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HR",
+      "replacement": "ếch-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IT",
+      "replacement": "ai-ti",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PR",
+      "replacement": "pi-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "GPS",
+      "replacement": "gi-pi-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SMS",
+      "replacement": "ét-em-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "TV",
+      "replacement": "ti-vi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "LED",
+      "replacement": "lét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "LCD",
+      "replacement": "eo-xi-đi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IP",
+      "replacement": "ai-pi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VR",
+      "replacement": "vi-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "AR",
+      "replacement": "ây-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IoT",
+      "replacement": "ai-âu-ti",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NFC",
+      "replacement": "en-ép-xi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "QR",
+      "replacement": "kiu-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "FBI",
+      "replacement": "ép-bi-ai",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CIA",
+      "replacement": "xi-ai-ây",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BBC",
+      "replacement": "bi-bi-xi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CNN",
+      "replacement": "xi-en-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NBA",
+      "replacement": "en-bi-ây",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "MBA",
+      "replacement": "em-bi-ây",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IQ",
+      "replacement": "ai-kiu",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "EQ",
+      "replacement": "i-kiu",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "GPA",
+      "replacement": "gi-pi-ây",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ID",
+      "replacement": "ai-đi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "DJ",
+      "replacement": "đi-giây",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "KOL",
+      "replacement": "kây-âu-eo",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "KOC",
+      "replacement": "kây-âu-xi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VIP",
+      "replacement": "vi-ai-pi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "EV",
+      "replacement": "i-vi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SUV",
+      "replacement": "ét-iu-vi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PC",
+      "replacement": "pi-xi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CV",
+      "replacement": "xi-vi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "MC",
+      "replacement": "em-xi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "MV",
+      "replacement": "em-vi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ATM",
+      "replacement": "a-tê-em",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Cách đọc kiểu Việt đã phổ biến hơn cách đọc tiếng Anh."
+    },
+    {
+      "term": "OK",
+      "replacement": "ô-kê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SOS",
+      "replacement": "ét-o-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UFO",
+      "replacement": "u-ép-o",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IELTS",
+      "replacement": "Ai-eo",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "TOEIC",
+      "replacement": "Tô-ích",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "TOEFL",
+      "replacement": "Tô-phồ",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NATO",
+      "replacement": "Na-tô",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ASEAN",
+      "replacement": "A-xê-an",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UNESCO",
+      "replacement": "U-nét-cô",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UNICEF",
+      "replacement": "U-ni-xép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "APEC",
+      "replacement": "A-pếch",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "OPEC",
+      "replacement": "Ô-pếch",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "FIFA",
+      "replacement": "Phi-pha",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NASA",
+      "replacement": "Na-xa",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "WHO",
+      "replacement": "vê-kép-hát-o",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "WTO",
+      "replacement": "vê-kép-tê-o",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "WWF",
+      "replacement": "vê-kép-vê-kép-ép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UN",
+      "replacement": "u-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "EU",
+      "replacement": "e-u",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UK",
+      "replacement": "u-ca",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "USA",
+      "replacement": "u-ét-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UAE",
+      "replacement": "u-a-e",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IMF",
+      "replacement": "i-em-ép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ADB",
+      "replacement": "a-đê-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "AFF",
+      "replacement": "a-ép-ép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IOC",
+      "replacement": "i-o-xê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "AFP",
+      "replacement": "a-ép-pê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NHK",
+      "replacement": "en-hát-ca",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "OECD",
+      "replacement": "o-e-xê-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UNDP",
+      "replacement": "u-en-đê-pê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "FAO",
+      "replacement": "ép-a-o",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "G7",
+      "replacement": "giê bảy",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "G20",
+      "replacement": "giê hai mươi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "USB",
+      "replacement": "u-ét-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "GDP",
+      "replacement": "giê-đê-pê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CPU",
+      "replacement": "xê-pê-u",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "GPU",
+      "replacement": "giê-pê-u",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SSD",
+      "replacement": "ét-ét-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HDD",
+      "replacement": "hát-đê-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VPN",
+      "replacement": "vê-pê-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "OTP",
+      "replacement": "ô-tê-pê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PDF",
+      "replacement": "pê-đê-ép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HD",
+      "replacement": "hát-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "DVD",
+      "replacement": "đê-vê-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CD",
+      "replacement": "xê-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "3G",
+      "replacement": "ba giê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "4G",
+      "replacement": "bốn giê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "5G",
+      "replacement": "năm giê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "UBND",
+      "replacement": "u-bê-en-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HĐND",
+      "replacement": "hát-đê-en-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "MTTQ",
+      "replacement": "em-tê-tê-quy",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "THPT",
+      "replacement": "tê-hát-pê-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "THCS",
+      "replacement": "tê-hát-xê-ét",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ĐHQG",
+      "replacement": "đê-hát-quy-giê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BHXH",
+      "replacement": "bê-hát-ích-hát",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BHYT",
+      "replacement": "bê-hát-i-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BHTN",
+      "replacement": "bê-hát-tê-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CSGT",
+      "replacement": "xê-ét-giê-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CAND",
+      "replacement": "xê-a-en-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "QĐND",
+      "replacement": "quy-đê-en-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "GTVT",
+      "replacement": "giê-tê-vê-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NXB",
+      "replacement": "en-ích-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "TNHH",
+      "replacement": "tê-en-hát-hát",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CTCP",
+      "replacement": "xê-tê-xê-pê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HTX",
+      "replacement": "hát-tê-ích",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VKSND",
+      "replacement": "vê-ca-ét-en-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "TAND",
+      "replacement": "tê-a-en-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SGK",
+      "replacement": "ét-giê-ca",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CMND",
+      "replacement": "xê-em-en-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CCCD",
+      "replacement": "xê-xê-xê-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "GPLX",
+      "replacement": "giê-pê-lờ-ích",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BQL",
+      "replacement": "bê-quy-lờ",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ATGT",
+      "replacement": "a-tê-giê-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PCCC",
+      "replacement": "pê-xê-xê-xê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ĐBSCL",
+      "replacement": "đê-bê-ét-xê-lờ",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ĐBQH",
+      "replacement": "đê-bê-quy-hát",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "KCN",
+      "replacement": "ca-xê-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "KTX",
+      "replacement": "ca-tê-ích",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BCH",
+      "replacement": "bê-xê-hát",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CNTT",
+      "replacement": "xê-en-tê-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "KHCN",
+      "replacement": "ca-hát-xê-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "NHNN",
+      "replacement": "en-hát-en-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "TW",
+      "replacement": "trung ương",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Báo đài đọc đầy đủ thay vì đánh vần."
+    },
+    {
+      "term": "TP.HCM",
+      "replacement": "thành phố Hồ Chí Minh",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Đọc đầy đủ."
+    },
+    {
+      "term": "TPHCM",
+      "replacement": "thành phố Hồ Chí Minh",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Đọc đầy đủ."
+    },
+    {
+      "term": "HCM",
+      "replacement": "Hồ Chí Minh",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Đọc đầy đủ."
+    },
+    {
+      "term": "TP",
+      "replacement": "thành phố",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Đọc đầy đủ, ví dụ: TP Hà Nội."
+    },
+    {
+      "term": "GS",
+      "replacement": "giáo sư",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Học hàm đọc đầy đủ như trên bản tin."
+    },
+    {
+      "term": "PGS",
+      "replacement": "phó giáo sư",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Học hàm đọc đầy đủ như trên bản tin."
+    },
+    {
+      "term": "TS",
+      "replacement": "tiến sĩ",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Học vị đọc đầy đủ như trên bản tin."
+    },
+    {
+      "term": "ThS",
+      "replacement": "thạc sĩ",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Học vị đọc đầy đủ như trên bản tin."
+    },
+    {
+      "term": "BS",
+      "replacement": "bác sĩ",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Đọc đầy đủ như trên bản tin."
+    },
+    {
+      "term": "HLV",
+      "replacement": "hát-lờ-vê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CLB",
+      "replacement": "xê-lờ-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VĐV",
+      "replacement": "vê-đê-vê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VFF",
+      "replacement": "vê-ép-ép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VPF",
+      "replacement": "vê-pê-ép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VAR",
+      "replacement": "vê-a-e-rờ",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "MU",
+      "replacement": "em-u",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PSG",
+      "replacement": "pê-ét-giê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VTV",
+      "replacement": "vê-tê-vê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VOV",
+      "replacement": "vê-o-vê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HTV",
+      "replacement": "hát-tê-vê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VTC",
+      "replacement": "vê-tê-xê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "TTXVN",
+      "replacement": "tê-tê-ích-vê-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BIDV",
+      "replacement": "bê-i-đê-vê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ACB",
+      "replacement": "a-xê-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "EVN",
+      "replacement": "e-vê-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VNPT",
+      "replacement": "vê-en-pê-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "FPT",
+      "replacement": "ép-pê-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SJC",
+      "replacement": "ét-gi-xê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PNJ",
+      "replacement": "pê-en-gi",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HAGL",
+      "replacement": "hát-a-giê-lờ",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SHB",
+      "replacement": "ét-hát-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "MSB",
+      "replacement": "em-ét-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "VIB",
+      "replacement": "vê-i-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "TPB",
+      "replacement": "tê-pê-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BOT",
+      "replacement": "bê-o-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ETC",
+      "replacement": "e-tê-xê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CSB",
+      "replacement": "xê-ét-bê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    }
+  ]
+}

@@ -25,3 +25,8 @@ merged_models_cache/
 # Admin web app data (SQLite)
 vieneu_data/
 /.claude/session-state/
+
+# Portal web (portal-web/, Next.js static export)
+portal-web/node_modules/
+portal-web/out/
+portal-web/.next/

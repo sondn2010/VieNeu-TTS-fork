@@ -1,0 +1,111 @@
+{
+  "char_count_vectors": [
+    {
+      "description": "empty string",
+      "text": "",
+      "expected_chars": 0
+    },
+    {
+      "description": "ascii",
+      "text": "abc",
+      "expected_chars": 3
+    },
+    {
+      "description": "nfc vietnamese",
+      "text": "Hà Nội",
+      "expected_chars": 6
+    },
+    {
+      "description": "nfd vietnamese normalizes to the same count as nfc",
+      "text": "Hà Nội",
+      "expected_chars": 6
+    },
+    {
+      "description": "astral emoji counts as one code point, unlike UTF-16 .length",
+      "text": "😀",
+      "expected_chars": 1
+    },
+    {
+      "description": "emoji plus text",
+      "text": "😀 VieNeu 🎉",
+      "expected_chars": 10
+    }
+  ],
+  "token_estimate_vectors": [
+    {
+      "chars": 0,
+      "rate_milli": 1000,
+      "expected_tokens": 0
+    },
+    {
+      "chars": 1,
+      "rate_milli": 1000,
+      "expected_tokens": 1
+    },
+    {
+      "chars": 999,
+      "rate_milli": 1000,
+      "expected_tokens": 999
+    },
+    {
+      "chars": 1000,
+      "rate_milli": 1000,
+      "expected_tokens": 1000
+    },
+    {
+      "chars": 1001,
+      "rate_milli": 1000,
+      "expected_tokens": 1001
+    },
+    {
+      "chars": 0,
+      "rate_milli": 1500,
+      "expected_tokens": 0
+    },
+    {
+      "chars": 1,
+      "rate_milli": 1500,
+      "expected_tokens": 2
+    },
+    {
+      "chars": 999,
+      "rate_milli": 1500,
+      "expected_tokens": 1499
+    },
+    {
+      "chars": 1000,
+      "rate_milli": 1500,
+      "expected_tokens": 1500
+    },
+    {
+      "chars": 1001,
+      "rate_milli": 1500,
+      "expected_tokens": 1502
+    },
+    {
+      "chars": 0,
+      "rate_milli": 333,
+      "expected_tokens": 0
+    },
+    {
+      "chars": 1,
+      "rate_milli": 333,
+      "expected_tokens": 1
+    },
+    {
+      "chars": 999,
+      "rate_milli": 333,
+      "expected_tokens": 333
+    },
+    {
+      "chars": 1000,
+      "rate_milli": 333,
+      "expected_tokens": 333
+    },
+    {
+      "chars": 1001,
+      "rate_milli": 333,
+      "expected_tokens": 334
+    }
+  ]
+}

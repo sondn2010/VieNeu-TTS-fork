@@ -1,0 +1,369 @@
+{
+  "format": "vieneu-dictionary/1",
+  "name": "Kỳ huyễn: Vùng Đất Tro Tàn",
+  "kind": "name",
+  "enabled": true,
+  "description": "Tên riêng Trung Địa trong The Chronicles of the Ash Land và thế giới Tolkien, phiên âm tiếng Việt.",
+  "entries": [
+    {
+      "term": "Udûn-gath",
+      "replacement": "U-đun gát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gorgûl",
+      "replacement": "Go-gun",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Muzgash",
+      "replacement": "Mút-gát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gorgoroth",
+      "replacement": "Go-gô-rốt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Dorwinion",
+      "replacement": "Đo-uy-ni-on",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Ephel Dúath",
+      "replacement": "Ê-phen Đu-át",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lugbúrz",
+      "replacement": "Lúc-bua",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Udûn",
+      "replacement": "U-đun",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Bilbo",
+      "replacement": "Bin-bô",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gorbag",
+      "replacement": "Go-bác",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Mordor",
+      "replacement": "Mo-đo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Nurnen",
+      "replacement": "Nua-nen",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Nurn",
+      "replacement": "Nua",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lothlórien",
+      "replacement": "Lốt-lo-ri-en",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lórien",
+      "replacement": "Lo-ri-en",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Caradhras",
+      "replacement": "Ca-rát-rát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Orc",
+      "replacement": "Óc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Sauron",
+      "replacement": "Xau-rôn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Nazgûl",
+      "replacement": "Nát-gun",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Barad-dûr",
+      "replacement": "Ba-rát Đua",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Orodruin",
+      "replacement": "Ô-rốt-ru-in",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Minas Morgul",
+      "replacement": "Mi-nát Mo-gun",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Minas Tirith",
+      "replacement": "Mi-nát Ti-rít",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gondor",
+      "replacement": "Gon-đo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Rohan",
+      "replacement": "Rô-han",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Rhûn",
+      "replacement": "Run",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Harad",
+      "replacement": "Ha-rát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Haradrim",
+      "replacement": "Ha-rát-rim",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Mirkwood",
+      "replacement": "Mơ-cút",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Erebor",
+      "replacement": "Ê-rê-bo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Isengard",
+      "replacement": "I-xen-gát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Saruman",
+      "replacement": "Xa-ru-man",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gandalf",
+      "replacement": "Gan-đanh",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Frodo",
+      "replacement": "Phờ-rô-đô",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Baggins",
+      "replacement": "Ba-ghin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Uruk-hai",
+      "replacement": "U-rúc hai",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Cirith Ungol",
+      "replacement": "Xi-rít Un-gôn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Shagrat",
+      "replacement": "Sa-gờ-rát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Shelob",
+      "replacement": "Se-lốp",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Morannon",
+      "replacement": "Mô-ran-non",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Grishnákh",
+      "replacement": "Gờ-rít-nác",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Uglúk",
+      "replacement": "Úc-lúc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Rivendell",
+      "replacement": "Ri-ven-đen",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Elrond",
+      "replacement": "En-rôn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Galadriel",
+      "replacement": "Ga-la-đờ-ri-en",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Aragorn",
+      "replacement": "A-ra-go",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Legolas",
+      "replacement": "Lê-gô-lát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gimli",
+      "replacement": "Gim-li",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Moria",
+      "replacement": "Mô-ri-a",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Balrog",
+      "replacement": "Ban-rốc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Melkor",
+      "replacement": "Men-co",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Morgoth",
+      "replacement": "Mo-gốt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Angmar",
+      "replacement": "Ang-ma",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Olog-hai",
+      "replacement": "Ô-lốc hai",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Dol Guldur",
+      "replacement": "Đôn Gun-đua",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Osgiliath",
+      "replacement": "Ốt-gi-li-át",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Ithilien",
+      "replacement": "I-thi-li-en",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Anduin",
+      "replacement": "An-đu-in",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Sméagol",
+      "replacement": "Sờ-mê-a-gôn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gollum",
+      "replacement": "Gô-lum",
+      "mode": "phonetic",
+      "case_sensitive": false
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: help setup setup-gpu setup-cpu setup-finetune demo run stream api docker-cpu docker-gpu docker-build-cpu docker-build-gpu check clean
+.PHONY: help setup setup-gpu setup-cpu setup-finetune demo run stream api docker-cpu docker-gpu docker-build-cpu docker-build-gpu check clean portal-db-up portal-db-down portal-test portal-up portal-down portal-migrate-sqlite portal-test-e2e
 
 help:
 	@echo "Targets:"
@@ -10,12 +10,19 @@ help:
 	@echo "  make setup-finetune - + peft/accelerate: LoRA fine-tuning (uv sync --extra finetune)"
 	@echo "  make run            - run Gradio UI (alias for 'make demo')"
 	@echo "  make stream         - run legacy Web Stream UI (v1 CPU GGUF)"
-	@echo "  make api            - run the OpenAI-compatible speech API + admin app (:8000, /admin)"
+	@echo "  make api            - run the OpenAI-compatible speech API (:8000, one VIENEU_API_KEY)"
 	@echo "  make docker-cpu     - docker compose --profile cpu (Web UI, torch-free)"
 	@echo "  make docker-gpu     - docker compose --profile gpu (Web UI, CUDA)"
 	@echo "  make clean          - clean artifacts (.venv, cache, ...)"
 	@echo "  make uv          - install uv (standalone)"
 	@echo "  make espeak      - install eSpeak NG (standalone)"
+	@echo "  make portal-db-up   - start Postgres + MinIO for the portal (docker/docker-compose.portal.yml)"
+	@echo "  make portal-db-down - stop the portal Postgres + MinIO stack"
+	@echo "  make portal-test    - portal-db-up, then run tests/portal against a disposable test DB"
+	@echo "  make portal-up      - build + start the full portal stack (postgres, minio, portal, worker)"
+	@echo "  make portal-down    - stop the full portal stack"
+	@echo "  make portal-migrate-sqlite SQLITE=path [APPLY=1] - run the migrator inside the portal container"
+	@echo "  make portal-test-e2e - engine-marked pytest + the Playwright Studio/library suite against a real engine"
 
 # --- Setup ---
 check-install-prereqs:
@@ -120,9 +127,59 @@ run: demo
 stream:
 	uv run vieneu-stream
 
-# First start on a fresh DB: VIENEU_ADMIN_USER=... VIENEU_ADMIN_PASSWORD=... make api
 api:
 	uv run python -m apps.openai_speech
+
+# --- Portal (FastAPI + Postgres, src/vieneu_portal/) ---
+portal-db-up:
+	docker compose -f docker/docker-compose.portal.yml up -d postgres minio minio-bucket-init
+
+portal-db-down:
+	docker compose -f docker/docker-compose.portal.yml down
+
+# tests/portal/conftest.py creates its own uniquely-named database per
+# session (from this URL's dbname as a naming template) and drops it at the
+# end; this target only needs Postgres reachable, not a pre-created DB.
+# Also runs the TypeScript mirror of the shared text contracts (portal-web/),
+# driven by the same JSON vectors as tests/portal/test_text_contract_vectors.py.
+portal-test: portal-db-up
+	@set -euo pipefail; \
+	uv sync --group portal --group dev; \
+	echo ">> waiting for postgres..."; \
+	until docker exec vieneu-portal-postgres pg_isready -U vieneu -d vieneu_portal >/dev/null 2>&1; do sleep 1; done; \
+	VIENEU_PORTAL_TEST_DATABASE_URL="postgresql://vieneu:vieneu@localhost:$${POSTGRES_PORT:-5432}/vieneu_portal_test" \
+	  uv run pytest tests/portal -m "not engine"; \
+	cd portal-web && npm install && npm run lint && npm run typecheck && npm test
+
+# Full stack: builds and starts postgres, minio, the portal API and the
+# worker. The engine is a separate profile (`--profile cpu|gpu up engine`)
+# since it needs a model download; start it yourself when needed.
+portal-up:
+	@set -euo pipefail; \
+	if [ ! -f .env ] && [ -f .env.example ]; then cp .env.example .env; echo ">> Created .env from .env.example"; fi; \
+	docker compose -f docker/docker-compose.portal.yml up -d --build postgres minio minio-bucket-init portal worker
+
+portal-down:
+	docker compose -f docker/docker-compose.portal.yml down
+
+# e.g. make portal-migrate-sqlite SQLITE=/workspace/vieneu_data/admin.sqlite3 APPLY=1
+portal-migrate-sqlite:
+	@set -euo pipefail; \
+	test -n "$$SQLITE" || { echo "usage: make portal-migrate-sqlite SQLITE=path/to/admin.sqlite3 [APPLY=1]"; exit 1; }; \
+	mode=--dry-run; [ "$$APPLY" = "1" ] && mode=--apply; \
+	docker compose -f docker/docker-compose.portal.yml exec portal python -m vieneu_portal migrate-sqlite --sqlite "$$SQLITE" $$mode
+
+# Tests marked `engine` need the real speech engine, not the double, and the
+# Playwright suite needs the full stack serving traffic — start both first:
+# make portal-up && docker compose -f docker/docker-compose.portal.yml --profile cpu up -d engine
+portal-test-e2e: portal-db-up
+	@set -euo pipefail; \
+	uv sync --group portal --group dev; \
+	echo ">> waiting for postgres..."; \
+	until docker exec vieneu-portal-postgres pg_isready -U vieneu -d vieneu_portal >/dev/null 2>&1; do sleep 1; done; \
+	VIENEU_PORTAL_TEST_DATABASE_URL="postgresql://vieneu:vieneu@localhost:$${POSTGRES_PORT:-5432}/vieneu_portal_test" \
+	  uv run pytest tests/portal -m engine; \
+	cd portal-web && npm install && npx playwright install --with-deps chromium && npx playwright test -c e2e/playwright.config.ts
 
 # --- Docker (auto-create .env if missing) ---
 docker-cpu:

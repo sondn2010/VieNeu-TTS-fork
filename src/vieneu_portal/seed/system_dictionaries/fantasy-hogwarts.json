@@ -1,0 +1,453 @@
+{
+  "format": "vieneu-dictionary/1",
+  "name": "Kỳ huyễn: Hogwarts",
+  "kind": "name",
+  "enabled": true,
+  "description": "Tên riêng thế giới Harry Potter và truyện Dracaena Malfoy, phiên âm theo spec tts-specs-v1.",
+  "entries": [
+    {
+      "term": "Hogwarts",
+      "replacement": "Hốc-goát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Hagrid",
+      "replacement": "Ha-gờ-rít",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Malfoy",
+      "replacement": "Man-phôi",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Harry",
+      "replacement": "Ha-ri",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Potter",
+      "replacement": "Pót-tơ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Dracaena",
+      "replacement": "Đờ-ra-xê-na",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gryffindor",
+      "replacement": "Gờ-ríp-phin-đo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Slytherin",
+      "replacement": "Sờ-li-thơ-rin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "McGonagall",
+      "replacement": "Mắc-go-na-gôn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Hermione",
+      "replacement": "Hơ-mai-ơ-ni",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Granger",
+      "replacement": "Gờ-ren-giơ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Daphne",
+      "replacement": "Đáp-ni",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Greengrass",
+      "replacement": "Gờ-rin-gờ-rát",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Pansy",
+      "replacement": "Pan-xi",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Hufflepuff",
+      "replacement": "Hấp-phồ-pấp",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Ravenclaw",
+      "replacement": "Rây-vần-cờ-lo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Dumbledore",
+      "replacement": "Đăm-bơ-đo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Albus",
+      "replacement": "An-bớt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Severus",
+      "replacement": "Xê-vơ-rớt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Snape",
+      "replacement": "Sờ-nây-pơ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Voldemort",
+      "replacement": "Vôn-đơ-mo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Draco",
+      "replacement": "Đờ-ra-cô",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lucius",
+      "replacement": "Lu-xi-út",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Narcissa",
+      "replacement": "Na-xi-xa",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Ginny",
+      "replacement": "Gin-ni",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Fred",
+      "replacement": "Phờ-rét",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "George",
+      "replacement": "Gioóc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Percy",
+      "replacement": "Pơ-xi",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Neville",
+      "replacement": "Nê-vin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Longbottom",
+      "replacement": "Long-bót-tơm",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lovegood",
+      "replacement": "Lớp-gút",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Sirius",
+      "replacement": "Xi-ri-út",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Remus",
+      "replacement": "Rê-mớt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lupin",
+      "replacement": "Lu-pin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Hedwig",
+      "replacement": "Hét-uých",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Quidditch",
+      "replacement": "Quýt-đích",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Hogsmeade",
+      "replacement": "Hốc-mít",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Azkaban",
+      "replacement": "A-dơ-ca-ban",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Gringotts",
+      "replacement": "Gờ-rin-gót",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Muggle",
+      "replacement": "Mắc-gồ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Diagon",
+      "replacement": "Đi-a-gon",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Crabbe",
+      "replacement": "Cờ-ráp",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Goyle",
+      "replacement": "Goi-ồ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Filch",
+      "replacement": "Phin-chơ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Flitwick",
+      "replacement": "Phờ-lít-uých",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Sprout",
+      "replacement": "Sờ-pờ-rao",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Pomfrey",
+      "replacement": "Pom-phờ-ri",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Quirrell",
+      "replacement": "Quy-ren",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Dobby",
+      "replacement": "Đốp-bi",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Dursley",
+      "replacement": "Đơ-sờ-li",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Zabini",
+      "replacement": "Da-bi-ni",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Blaise",
+      "replacement": "Bờ-lây",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Parkinson",
+      "replacement": "Pa-kin-xơn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Theodore",
+      "replacement": "Thê-ô-đo",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Minerva",
+      "replacement": "Mi-nơ-va",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Cedric",
+      "replacement": "Xê-đờ-ríc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Diggory",
+      "replacement": "Đi-gơ-ri",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Seamus",
+      "replacement": "Sê-mớt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Finnigan",
+      "replacement": "Phin-ni-gân",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Pettigrew",
+      "replacement": "Pét-ti-gru",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Bellatrix",
+      "replacement": "Bê-la-tríc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lestrange",
+      "replacement": "Lét-tren",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Dementor",
+      "replacement": "Đê-men-tơ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Patronus",
+      "replacement": "Pa-trô-nớt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Horcrux",
+      "replacement": "Hoóc-cờ-rắc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Lumos",
+      "replacement": "Lu-mốt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Expelliarmus",
+      "replacement": "Ếch-pe-li-ác-mớt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Nimbus",
+      "replacement": "Nim-bớt",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Ron",
+      "replacement": "Rôn",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Phân biệt hoa thường để không khớp từ 'ron' (gioăng)."
+    },
+    {
+      "term": "Nott",
+      "replacement": "Nót",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "Scotland",
+      "mode": "en",
+      "case_sensitive": false
+    },
+    {
+      "term": "Weasley",
+      "mode": "en",
+      "case_sensitive": false,
+      "note": "Spec 4.4 xếp vào nhóm giữ giọng Anh."
+    },
+    {
+      "term": "Madam",
+      "mode": "en",
+      "case_sensitive": false,
+      "note": "Spec 4.4 xếp vào nhóm giữ giọng Anh."
+    },
+    {
+      "term": "Malkin",
+      "mode": "en",
+      "case_sensitive": false,
+      "note": "Spec 4.4 xếp vào nhóm giữ giọng Anh."
+    }
+  ]
+}

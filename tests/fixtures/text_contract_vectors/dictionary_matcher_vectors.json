@@ -1,0 +1,473 @@
+{
+  "matcher_vectors": [
+    {
+      "description": "TC-12 longest match: km/h beats km",
+      "text": "Tốc độ 5 km/h",
+      "rules": [
+        {
+          "source": "km",
+          "target": "ki lô mét",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        },
+        {
+          "source": "km/h",
+          "target": "ki lô mét trên giờ",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Tốc độ 5 ki lô mét trên giờ"
+    },
+    {
+      "description": "TC-13 single pass, no rescan of generated target",
+      "text": "A",
+      "rules": [
+        {
+          "source": "A",
+          "target": "AB",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        },
+        {
+          "source": "B",
+          "target": "C",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "AB"
+    },
+    {
+      "description": "whole_word blocks a match inside a longer word",
+      "text": "category",
+      "rules": [
+        {
+          "source": "cat",
+          "target": "MEOW",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "category"
+    },
+    {
+      "description": "whole_word allows a standalone word match",
+      "text": "the cat sat",
+      "rules": [
+        {
+          "source": "cat",
+          "target": "MEOW",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "the MEOW sat"
+    },
+    {
+      "description": "case_sensitive rule misses a different-case candidate",
+      "text": "gpu is fast",
+      "rules": [
+        {
+          "source": "GPU",
+          "target": "Gờ Pê U",
+          "whole_word": true,
+          "case_sensitive": true,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "gpu is fast"
+    },
+    {
+      "description": "case_sensitive rule matches the exact case",
+      "text": "GPU is fast",
+      "rules": [
+        {
+          "source": "GPU",
+          "target": "Gờ Pê U",
+          "whole_word": true,
+          "case_sensitive": true,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Gờ Pê U is fast"
+    },
+    {
+      "description": "disabled rule never applies",
+      "text": "VieNeu",
+      "rules": [
+        {
+          "source": "VieNeu",
+          "target": "Vi Nơi",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": false,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "VieNeu"
+    },
+    {
+      "description": "Vietnamese diacritics word boundary: extra trailing letter blocks the match",
+      "text": "Hà Nộii là thủ đô",
+      "rules": [
+        {
+          "source": "Hà Nội",
+          "target": "Ha Noi",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Hà Nộii là thủ đô"
+    },
+    {
+      "description": "Vietnamese diacritics word boundary: clean boundary matches",
+      "text": "Hà Nội là thủ đô",
+      "rules": [
+        {
+          "source": "Hà Nội",
+          "target": "Ha Noi",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Ha Noi là thủ đô"
+    },
+    {
+      "description": "NFD input still matches an NFC rule source (input is NFC-normalized first)",
+      "text": "Việt",
+      "rules": [
+        {
+          "source": "Việt",
+          "target": "Viet",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Viet"
+    },
+    {
+      "description": "astral emoji chars are treated as single units and do not break boundaries",
+      "text": "😀 VieNeu 🎉",
+      "rules": [
+        {
+          "source": "VieNeu",
+          "target": "Vi Nơi",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "😀 Vi Nơi 🎉"
+    },
+    {
+      "description": "protected [bracket] span is copied verbatim",
+      "text": "Tôi [cưởi] rởi cưởi",
+      "rules": [
+        {
+          "source": "cưởi",
+          "target": "REPLACED",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Tôi [cưởi] rởi REPLACED"
+    },
+    {
+      "description": "protected <en>...</en> span is copied verbatim, not rescanned",
+      "text": "Tôi dùng <en>Apple</en> và Apple khác",
+      "rules": [
+        {
+          "source": "Apple",
+          "target": "Ép-pố",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Tôi dùng <en>Apple</en> và Ép-pố khác"
+    },
+    {
+      "description": "protected <|...|> span is copied verbatim",
+      "text": "Tôi dùng <|Apple|> và Apple khác",
+      "rules": [
+        {
+          "source": "Apple",
+          "target": "Ép-pố",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Tôi dùng <|Apple|> và Ép-pố khác"
+    },
+    {
+      "description": "unterminated bracket is not treated as protected",
+      "text": "[cưởi la la",
+      "rules": [
+        {
+          "source": "cưởi",
+          "target": "REPLACED",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "[REPLACED la la"
+    },
+    {
+      "description": "symbol sources C++ and .NET",
+      "text": "Học C++ và .NET nhé",
+      "rules": [
+        {
+          "source": "C++",
+          "target": "C Plus Plus",
+          "whole_word": true,
+          "case_sensitive": true,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        },
+        {
+          "source": ".NET",
+          "target": "Dot NET",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 1
+        }
+      ],
+      "expected": "Học C Plus Plus và Dot NET nhé"
+    },
+    {
+      "description": "capital I with dot above folds consistently (lower(), not casefold)",
+      "text": "İ",
+      "rules": [
+        {
+          "source": "İ",
+          "target": "[DOTTED-I]",
+          "whole_word": false,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "[DOTTED-I]"
+    },
+    {
+      "description": "plain ascii i does not fold-match capital I with dot above",
+      "text": "i",
+      "rules": [
+        {
+          "source": "İ",
+          "target": "[DOTTED-I]",
+          "whole_word": false,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "i"
+    },
+    {
+      "description": "sharp s does not fold-match 'ss' under lower()/toLowerCase() (unlike full casefold)",
+      "text": "straße",
+      "rules": [
+        {
+          "source": "strasse",
+          "target": "X",
+          "whole_word": false,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "straße"
+    },
+    {
+      "description": "precedence: equal length, account beats system",
+      "text": "VieNeu",
+      "rules": [
+        {
+          "source": "VieNeu",
+          "target": "Vi Nơi",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "SYSTEM",
+          "list_order": 0
+        },
+        {
+          "source": "VieNeu",
+          "target": "Vi Nêu",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        }
+      ],
+      "expected": "Vi Nêu"
+    },
+    {
+      "description": "precedence: equal length, system beats english fallback",
+      "text": "Apple",
+      "rules": [
+        {
+          "source": "Apple",
+          "target": "Ép-pố",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "SYSTEM",
+          "list_order": 0
+        },
+        {
+          "source": "Apple",
+          "target": "",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ENGLISH_FALLBACK",
+          "list_order": 0
+        }
+      ],
+      "expected": "Ép-pố"
+    },
+    {
+      "description": "fallback-only term is wrapped in <en>, keeping the matched text's original casing",
+      "text": "Google",
+      "rules": [
+        {
+          "source": "Google",
+          "target": "",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ENGLISH_FALLBACK",
+          "list_order": 0
+        }
+      ],
+      "expected": "<en>Google</en>"
+    },
+    {
+      "description": "fallback wrap keeps all-caps casing",
+      "text": "GOOGLE",
+      "rules": [
+        {
+          "source": "Google",
+          "target": "",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ENGLISH_FALLBACK",
+          "list_order": 0
+        }
+      ],
+      "expected": "<en>GOOGLE</en>"
+    },
+    {
+      "description": "precedence: longer system rule still beats a shorter account rule",
+      "text": "5 km/h",
+      "rules": [
+        {
+          "source": "km",
+          "target": "ki lô mét",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        },
+        {
+          "source": "km/h",
+          "target": "ki lô mét trên giờ",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "SYSTEM",
+          "list_order": 0
+        }
+      ],
+      "expected": "5 ki lô mét trên giờ"
+    },
+    {
+      "description": "precedence: equal length and layer, list_order breaks the tie",
+      "text": "AB",
+      "rules": [
+        {
+          "source": "AB",
+          "target": "first",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 0
+        },
+        {
+          "source": "AB",
+          "target": "second",
+          "whole_word": true,
+          "case_sensitive": false,
+          "enabled": true,
+          "layer": "ACCOUNT",
+          "list_order": 1
+        }
+      ],
+      "expected": "first"
+    },
+    {
+      "description": "no rules, text unchanged",
+      "text": "Hello world",
+      "rules": [],
+      "expected": "Hello world"
+    }
+  ]
+}

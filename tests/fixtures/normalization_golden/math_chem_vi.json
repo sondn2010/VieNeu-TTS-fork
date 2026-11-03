@@ -1,0 +1,59 @@
+[
+  {
+    "name": "TC-04 math and chemistry",
+    "input": "Giải phương trình ax² + bx + c = 0 với Δ ≥ 0, x ∈ ℝ và phản ứng 2H2 + O2 → 2H2O",
+    "output": "Giải phương trình a x bình phương cộng b x cộng c bằng không với đen ta lớn hơn hoặc bằng không, x thuộc tập số thực và phản ứng hai H hai cộng O hai tạo thành hai H hai O"
+  },
+  {
+    "name": "negative: speed unit (ascii hyphen in km/h is not math)",
+    "input": "5 km/h",
+    "output": "5 km/h"
+  },
+  {
+    "name": "negative: year range (ascii hyphen is not the math minus sign)",
+    "input": "2020-2021",
+    "output": "2020-2021"
+  },
+  {
+    "name": "negative: paper size, no element 'A'",
+    "input": "A4",
+    "output": "A4"
+  },
+  {
+    "name": "negative: audio format, no element 'M' or 'MP'",
+    "input": "MP3",
+    "output": "MP3"
+  },
+  {
+    "name": "negative: disease name, no element 'D'",
+    "input": "COVID-19",
+    "output": "COVID-19"
+  },
+  {
+    "name": "negative: A/B testing",
+    "input": "A/B",
+    "output": "A/B"
+  },
+  {
+    "name": "negative: emotion tag is a protected span",
+    "input": "[cười]",
+    "output": "[cười]"
+  },
+  {
+    "name": "negative: already-wrapped English span is protected, even though it contains a real formula",
+    "input": "<en>H2O</en>",
+    "output": "<en>H2O</en>"
+  },
+  {
+    "name": "negative: dictionary-protected business term that would otherwise parse as a formula",
+    "input": "B2B",
+    "output": "B2B",
+    "protected_terms": ["B2B", "B2C", "F0", "F1"]
+  },
+  {
+    "name": "negative: dictionary-protected medical term that would otherwise parse as a formula",
+    "input": "F0",
+    "output": "F0",
+    "protected_terms": ["B2B", "B2C", "F0", "F1"]
+  }
+]

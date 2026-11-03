@@ -1,0 +1,62 @@
+/**
+ * Design tokens (vieneu_tts_user_specs.md:29-43). Dark is the default
+ * theme; `[data-theme="light"]` on <html> switches to the light palette.
+ * `theme-provider.tsx` sets that attribute before hydration so there is no
+ * flash of the wrong theme.
+ */
+:root,
+:root[data-theme="dark"] {
+  --color-bg-primary: #0b0b0f;
+  --color-bg-secondary: #13131a;
+  --color-surface: #181822;
+  --color-border: #262636;
+  --color-accent: #7c5cfc;
+  --color-accent-hover: #8b5cf6;
+  --color-text-primary: #f3f4f6;
+  --color-text-secondary: #9ca3af;
+  --color-text-muted: #6b7280;
+
+  --color-success-text: #34d399;
+  --color-success-bg: rgba(16, 185, 129, 0.1);
+  --color-success-border: rgba(16, 185, 129, 0.3);
+
+  --color-danger-text: #f87171;
+  --color-danger-badge: #ef4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.1);
+  --color-danger-border: rgba(239, 68, 68, 0.3);
+
+  --color-warning: #f59e0b;
+  --color-rank-gold: #fbbf24;
+  --color-rank-silver: #94a3b8;
+  --color-rank-bronze: #d97706;
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+:root[data-theme="light"] {
+  --color-bg-primary: #f7f7fb;
+  --color-bg-secondary: #ffffff;
+  --color-surface: #ffffff;
+  --color-border: #e2e2ea;
+  --color-accent: #7c5cfc;
+  --color-accent-hover: #6d4bea;
+  --color-text-primary: #15151c;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #6b7280;
+
+  --color-success-text: #047857;
+  --color-success-bg: rgba(16, 185, 129, 0.08);
+  --color-success-border: rgba(16, 185, 129, 0.3);
+
+  --color-danger-text: #b91c1c;
+  --color-danger-badge: #ef4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.08);
+  --color-danger-border: rgba(239, 68, 68, 0.3);
+
+  --color-warning: #b45309;
+  --color-rank-gold: #d97706;
+  --color-rank-silver: #64748b;
+  --color-rank-bronze: #92400e;
+}

@@ -1,0 +1,62 @@
+# VieNeu Portal API/worker image — FastAPI + Postgres + S3, torch/onnx/gradio-free.
+# Installs only the `portal` dependency group plus the package itself (no
+# `.[extra]`), so this image never pulls in the TTS engine's own dependencies.
+#
+#   docker build -t vieneu-portal -f docker/Dockerfile.portal .
+#   docker run -p 8100:8100 vieneu-portal python -m vieneu_portal serve
+FROM python:3.12-slim-bookworm AS build
+
+ENV UV_LINK_MODE=copy
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+WORKDIR /workspace
+COPY pyproject.toml uv.lock ./
+# `--no-hashes`: the resulting requirements file is installed with plain
+# `pip install`, not `uv pip sync`, so pinned hashes would fail verification
+# against PyPI's own wheel metadata.
+RUN uv export --frozen --only-group portal --no-hashes > /tmp/portal-requirements.txt
+
+# Static export of the Next.js SPA (phase 11/12) — built separately from the
+# Python layers so `npm ci`/`next build` never touches the portal's own
+# dependency resolution.
+FROM node:22-slim AS web-build
+WORKDIR /web
+COPY portal-web/package.json portal-web/package-lock.json* ./
+RUN npm ci
+COPY portal-web/ ./
+RUN npm run build
+
+FROM python:3.12-slim-bookworm
+
+ENV PYTHONUNBUFFERED=1 \
+    PORT=8100 \
+    HOST=0.0.0.0 \
+    VIENEU_PORTAL_WEB_DIST_DIR=/workspace/web-dist
+
+# postgresql-client-16 provides `pg_dump`, used by `db upgrade` and
+# `migrate-sqlite` to back up the target before writing to it.
+RUN apt-get update && apt-get install -y --no-install-recommends postgresql-client-16 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd --create-home --uid 1000 app
+WORKDIR /workspace
+
+COPY --from=build /tmp/portal-requirements.txt /tmp/portal-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/portal-requirements.txt && rm /tmp/portal-requirements.txt
+
+COPY pyproject.toml ./
+COPY src/vieneu_portal/ src/vieneu_portal/
+RUN pip install --no-cache-dir --no-deps .
+
+COPY --from=web-build /web/out /workspace/web-dist
+
+# Fails the build instead of shipping an image that silently drags in the
+# TTS engine's own (heavy, GPU-oriented) dependencies.
+RUN python -c "\
+import importlib.util, sys; \
+leaked = [m for m in ('onnxruntime', 'torch', 'gradio') if importlib.util.find_spec(m) is not None]; \
+sys.exit(f'portal image must not import {leaked}' if leaked else 0)"
+
+RUN chown -R app:app /workspace
+USER app
+EXPOSE 8100
+CMD ["python", "-m", "vieneu_portal", "serve"]

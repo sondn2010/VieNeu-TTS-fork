@@ -1,0 +1,467 @@
+{
+  "format": "vieneu-dictionary/1",
+  "name": "Y tế",
+  "kind": "term",
+  "enabled": true,
+  "description": "Thuật ngữ y tế, tên thuốc, bệnh, xét nghiệm và đơn vị đo phổ biến đọc theo cách Việt hóa.",
+  "entries": [
+    {
+      "term": "COVID-19",
+      "replacement": "Cô-vít mười chín",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "COVID",
+      "replacement": "Cô-vít",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "SARS-CoV-2",
+      "replacement": "Sác-cô-vi hai",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "vaccine",
+      "replacement": "vắc-xin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "virus",
+      "replacement": "vi-rút",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "insulin",
+      "replacement": "in-su-lin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "paracetamol",
+      "replacement": "pa-ra-xê-ta-mon",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "ibuprofen",
+      "replacement": "i-bu-prô-phen",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "aspirin",
+      "replacement": "át-pi-rin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "amoxicillin",
+      "replacement": "a-mốc-xi-xi-lin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "penicillin",
+      "replacement": "pê-ni-xi-lin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "vitamin",
+      "replacement": "vi-ta-min",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "omega-3",
+      "replacement": "ô-mê-ga ba",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "collagen",
+      "replacement": "côn-la-gen",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "protein",
+      "replacement": "prô-tê-in",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "cholesterol",
+      "replacement": "cô-lét-tê-rôn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "glucose",
+      "replacement": "gờ-lu-cô",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "oxygen",
+      "replacement": "ô-xi",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "enzyme",
+      "replacement": "en-dim",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "hormone",
+      "replacement": "hoóc-môn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "dopamine",
+      "replacement": "đô-pa-min",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "serotonin",
+      "replacement": "xê-rô-tô-nin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "adrenaline",
+      "replacement": "a-đrê-na-lin",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Omicron",
+      "replacement": "Ô-mi-crôn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Delta",
+      "replacement": "Đen-ta",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Remdesivir",
+      "replacement": "Rem-đê-xi-via",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Molnupiravir",
+      "replacement": "Môn-nu-pi-ra-via",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Pfizer",
+      "replacement": "Phai-dơ",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Moderna",
+      "replacement": "Mô-đéc-na",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "AstraZeneca",
+      "replacement": "Át-tra-dê-nê-ca",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Sinopharm",
+      "replacement": "Xi-nô-pham",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Ebola",
+      "replacement": "Ê-bô-la",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Zika",
+      "replacement": "Di-ca",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "mpox",
+      "replacement": "em-pốc",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "influenza",
+      "replacement": "in-phờ-lu-en-da",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Panadol",
+      "replacement": "Pa-na-đôn",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Efferalgan",
+      "replacement": "Ê-phe-ran-gan",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "Tamiflu",
+      "replacement": "Ta-mi-phờ-lu",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "CT scan",
+      "replacement": "xê-tê sờ-can",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "stress",
+      "replacement": "xì-trét",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "migraine",
+      "replacement": "mai-gờ-ren",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "gout",
+      "replacement": "gút",
+      "mode": "phonetic",
+      "case_sensitive": false
+    },
+    {
+      "term": "MRI",
+      "replacement": "em-a-i",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CT",
+      "replacement": "xê-tê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ICU",
+      "replacement": "i-xê-u",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "DNA",
+      "replacement": "đê-en-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ADN",
+      "replacement": "a-đê-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "RNA",
+      "replacement": "e-rờ-en-a",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ARN",
+      "replacement": "a-e-rờ-en",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HIV",
+      "replacement": "hát-i-vê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "AIDS",
+      "replacement": "ết",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HPV",
+      "replacement": "hát-pê-vê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ECG",
+      "replacement": "e-xê-giê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "BMI",
+      "replacement": "bê-em-i",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PCR",
+      "replacement": "pê-xê-e-rờ",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CDC",
+      "replacement": "xê-đê-xê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ECMO",
+      "replacement": "Ếch-mô",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "SpO2",
+      "replacement": "ét-pê-ô hai",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "CRP",
+      "replacement": "xê-e-rờ-pê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "HbA1c",
+      "replacement": "hát-bê-a một xê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "H5N1",
+      "replacement": "hát năm en một",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ADHD",
+      "replacement": "a-đê-hát-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "PTSD",
+      "replacement": "pê-tê-ét-đê",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IVF",
+      "replacement": "i-vê-ép",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "F0",
+      "replacement": "ép không",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Cách gọi ca nhiễm trong thời kỳ COVID-19."
+    },
+    {
+      "term": "F1",
+      "replacement": "ép một",
+      "mode": "phonetic",
+      "case_sensitive": true,
+      "note": "Cách gọi người tiếp xúc gần trong thời kỳ COVID-19."
+    },
+    {
+      "term": "mg",
+      "replacement": "mi-li-gam",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "ml",
+      "replacement": "mi-li-lít",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "mmHg",
+      "replacement": "mi-li-mét thủy ngân",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "mcg",
+      "replacement": "mi-crô-gam",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "µg",
+      "replacement": "mi-crô-gam",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "mmol/L",
+      "replacement": "mi-li-mol trên lít",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "mg/dL",
+      "replacement": "mi-li-gam trên đê-xi-lít",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "IU",
+      "replacement": "đơn vị quốc tế",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "bpm",
+      "replacement": "nhịp mỗi phút",
+      "mode": "phonetic",
+      "case_sensitive": true
+    },
+    {
+      "term": "kcal",
+      "replacement": "ki-lô-ca-lo",
+      "mode": "phonetic",
+      "case_sensitive": true
+    }
+  ]
+}

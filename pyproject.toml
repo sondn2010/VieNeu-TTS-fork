@@ -78,8 +78,6 @@ dependencies = [
     "PyYAML", # gradio config.yaml
     "gradio>=5.49.1", # web UI (vieneu-web)
     "librosa>=0.11.0",
-    "jinja2", # admin web app templates (already pulled in by gradio)
-    "markdown-it-py", # in-app Help page renders docs/*.md (already pulled in by gradio)
     # NOTE: audio watermarking is opt-in via `pip install vieneu[watermark]` (resemble-perth,
     # needs torch/torchaudio). The PyPI package literally named `perth` is an unrelated
     # threading helper and must NOT be listed here (issue #191).
@@ -136,6 +134,19 @@ finetune = [
 ]
 
 [dependency-groups]
+# Portal API (src/vieneu_portal/): FastAPI + Postgres + S3, torch/onnx-free.
+# `vieneu_portal` must never import `vieneu` or `vieneu_preprocess` so the
+# portal image can stay minimal. Install with: uv sync --group portal
+portal = [
+    "fastapi",
+    "uvicorn[standard]",
+    "sqlalchemy>=2",
+    "alembic",
+    "psycopg[binary]>=3",
+    "boto3",
+    "httpx",
+    "python-multipart",
+]
 dev = [
     "pytest",
     "pytest-asyncio",
@@ -159,6 +170,14 @@ gpu = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]   # finetune/tests runs in its own process (see tests/test_finetune_lora.py)
 pythonpath = ["src"]
+# tests/portal needs the `portal` dependency group (sqlalchemy/fastapi/alembic,
+# not installed by the core/dev groups) and a running Postgres; it only runs
+# via `make portal-test`, which passes `tests/portal` explicitly and bypasses
+# this norecursedirs entry.
+norecursedirs = [".*", "build", "dist", "CVS", "_darcs", "{arch}", "*.egg", "venv", "node_modules", "portal"]
+markers = [
+    "engine: needs the real speech engine (not the double); runs only via `make portal-test-e2e`",
+]
 
 [project.scripts]
 vieneu-web = "apps.gradio_main:main"
@@ -171,12 +190,12 @@ package-dir = {"" = "src", "apps" = "apps", "examples" = "examples"}
 
 [tool.setuptools.packages.find]
 where = ["src", "."]
-include = ["vieneu*", "vieneu_utils*", "vieneu_preprocess*", "vieneu_admin*", "apps*", "examples*"]
+include = ["vieneu*", "vieneu_utils*", "vieneu_preprocess*", "apps*", "examples*"]
 
 [tool.setuptools.package-data]
 vieneu = ["assets/*.json", "assets/samples/*"]
 vieneu_preprocess = ["config/*.yaml"]
-vieneu_admin = ["templates/*.html", "templates/**/*.html", "static/*", "seed/*.json"]
+vieneu_portal = ["alembic.ini", "migrations/**", "seed/**"]
 examples = ["audio_ref/*.wav", "srt/*.srt"]  # samples the Gradio app (vieneu-web) offers
 
 [tool.uv.sources]
