@@ -6,7 +6,7 @@ import pytest
 
 from vieneu_preprocess.dictionary_schema import load_dictionary_json, merge_lexicon
 
-SEED_DIR = Path(__file__).resolve().parents[1] / "src" / "vieneu_admin" / "seed"
+SEED_DIR = Path(__file__).resolve().parents[1] / "src" / "vieneu_portal" / "seed" / "system_dictionaries"
 
 # file -> (kind, minimum entry count)
 EXPECTED = {
