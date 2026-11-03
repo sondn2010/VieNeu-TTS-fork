@@ -15,27 +15,35 @@ Priority P1. Status pending. Creates `src/vieneu_portal/` (torch-free FastAPI ap
 - Spec 08 and master DDL disagree on column names; 08 is the DDL authority (`processed_text`, `tokens_consumed`, `error_code`).
 
 ## Requirements
-- `python -m vieneu_portal serve` starts uvicorn on `PORTAL_HOST:PORTAL_PORT` (default 127.0.0.1:8100).
+- `python -m vieneu_portal serve` starts uvicorn on `VIENEU_PORTAL_HOST:VIENEU_PORTAL_PORT` (default 127.0.0.1:8100).
 - `GET /api/v1/health` returns `{status, db}`; DB down gives 503.
 - When `WEB_DIST_DIR` exists, `app.py` serves the Next.js static export at `/` (exact file, then `<path>/index.html`, then `404.html`); `/api/*` never falls through to the SPA. Done here so web phases never edit `app.py`.
 - Errors always `{"error": {"code": "UPPER_SNAKE", "message": str, ...extra}}`; FastAPI validation errors map to `422 VALIDATION_ERROR`.
 - `python -m vieneu_portal db upgrade` runs `pg_dump` to `PORTAL_BACKUP_DIR` first when the target DB has tables, then `alembic upgrade head`. Missing `pg_dump` on a non-empty DB aborts unless `--no-backup` is passed explicitly.
 
 ## Architecture
-Settings (env, prefix `VIENEU_PORTAL_`): `DATABASE_URL`, `S3_ENDPOINT`, `S3_BUCKET`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_REGION`, `STORAGE_BACKEND` (`s3`|`local`), `LOCAL_STORAGE_DIR`, `PRESIGN_TTL_SEC` (900), `ENGINE_URL`, `ENGINE_SERVICE_KEY`, `ENGINE_TIMEOUT_SEC`, `SESSION_TTL_SEC` (14 d), `COOKIE_SECURE`, `TOKENS_PER_CHAR_MILLI` (1000), `TRIAL_TOKENS` (150000), `TRIAL_DAILY_CHARS` (50000), `TRIAL_DAYS` (14), `TTS_MAX_CHARS` (20000), `TTS_SYNC_CHAR_CAP` (3000), `MODERATION_PROVIDER` (`off`|`blocklist`), `MODERATION_BLOCKLIST_PATH`, `MODERATION_FAIL_MODE` (`closed`), `TERMS_VERSION` ("1.0"), `QUOTA_TIMEZONE` (`Asia/Saigon`), `S3_PUBLIC_ENDPOINT` (presign host), `ADMIN_UPLOAD_MAX_BYTES` (5 MB samples, 1 MB avatars), `WEB_DIST_DIR`, `BACKUP_DIR`, `MODEL_VERSION_LABEL` ("V4").
+Settings (env, prefix `VIENEU_PORTAL_`): `HOST` (127.0.0.1), `PORT` (8100), `SECRET_KEY` (required, >= 32 bytes, fail fast; CSRF and other HMAC keys derived from it with domain-separation labels; never auto-generated per process), `FORWARDED_ALLOW_IPS` (empty = trust no proxy headers), `DATABASE_URL`, `DB_POOL_SIZE` (10), `DB_MAX_OVERFLOW` (10), `DB_POOL_TIMEOUT_SEC` (10), `DB_STATEMENT_TIMEOUT_MS` (15000), `DB_IDLE_IN_TX_TIMEOUT_MS` (30000), `S3_ENDPOINT`, `S3_PUBLIC_ENDPOINT` (presign host), `S3_BUCKET`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_REGION`, `PRESIGN_TTL_SEC` (900), `ENGINE_URL`, `ENGINE_SERVICE_KEY`, `ENGINE_TIMEOUT_SEC` (base 60; render timeout = base + chars x `ENGINE_SEC_PER_CHAR`), `ENGINE_SEC_PER_CHAR` (0.05), `ENGINE_MAX_INPUT_CHARS` (20000), `JOB_LEASE_SEC` (must exceed the largest render timeout; renewed every lease/3), `WORKER_MAX_ATTEMPTS` (3), `SESSION_TTL_SEC` (14 d idle, sliding), `SESSION_ABSOLUTE_TTL_SEC` (30 d), `ADMIN_SESSION_IDLE_TTL_SEC` (12 h), `COOKIE_SECURE`, `SIGNUP_ENABLED` (true), `SIGNUP_MAX_PER_IP_PER_HOUR` (5), `SIGNUP_MAX_GLOBAL_PER_HOUR` (200), `LOGIN_MAX_FAILURES` (5 per email+IP / 15 min), `LOGIN_MAX_FAILURES_PER_IP` (30 / 15 min), `MIGRATION_EMAIL_DOMAIN` (`migrated.invalid`, rejected at signup), `TOKENS_PER_CHAR_MILLI` (1000), `TRIAL_TOKENS` (150000), `TRIAL_DAILY_CHARS` (50000), `TRIAL_DAYS` (14), `TTS_MAX_CHARS` (20000), `TTS_SYNC_CHAR_CAP` (3000, compared with processed length), `MODERATION_PROVIDER` (`off`|`blocklist`), `MODERATION_BLOCKLIST_PATH`, `MODERATION_FAIL_MODE` (`closed`), `TERMS_VERSION` ("1.0"), `QUOTA_TIMEZONE` (`Asia/Saigon`), `SYSTEM_RULES_MAX` (20000 across enabled packs), `ADMIN_UPLOAD_MAX_BYTES` (5 MB samples, 1 MB avatars), `WEB_DIST_DIR`, `BACKUP_DIR`, `MODEL_VERSION_LABEL` ("V4").
+<!-- Updated: Red Team 2026-11-02 - added secret, host/port, proxy, pool/timeouts, lease, session TTLs, signup/login throttles, engine input cap; removed local storage backend settings -->
+
+Test mode: `tests/portal/conftest.py` sets a fixed 32-byte test `SECRET_KEY`; no production default exists.
 
 Baseline migration = every table of spec 08 plus these additions:
 | Table | Addition |
 |---|---|
-| users | `password_hash`, `role` CHECK (`USER`,`ADMIN`,`SUPERADMIN`) default `USER`, `is_active`, `last_login_at`, `terms_version`, `terms_accepted_ip`, `daily_chars_reset_on DATE`, unique index on `lower(email)` |
-| user_sessions (new) | `token_hash` PK, `user_id` FK cascade, `csrf_nonce`, `expires_at`, `created_at`, `ip`, `user_agent` |
-| voices | `engine_voice_name` (preset key sent to engine), `sort_order`, `sample_object_key` |
-| tts_recordings | `audio_object_key`; `source_module` CHECK widened to `STUDIO,PODCAST,STORY,API,MCP`; pg_trgm GIN on `original_text` |
+| users | `password_hash`, `role` CHECK (`USER`,`ADMIN`,`SUPERADMIN`) default `USER`, `is_active`, `last_login_at`, `terms_version`, `terms_accepted_ip`, `daily_chars_reset_on DATE`, `synthesis_lock_until TIMESTAMPTZ NULL` (per-user in-flight synthesis lease), `legacy_source_id TEXT NULL UNIQUE` (`sqlite:users:<id>`, migration provenance), unique index on `lower(email)` |
+| user_sessions (new) | `token_hash` PK, `user_id` FK cascade, `csrf_nonce`, `expires_at` (idle), `absolute_expires_at`, `created_at`, `ip`, `user_agent`; index `(expires_at)` for purge |
+| auth_throttle_events (new) | `id BIGSERIAL`, `kind` CHECK (`LOGIN_FAILURE`,`SIGNUP`), `email_key TEXT NULL`, `ip INET`, `created_at`; indexes `(kind, ip, created_at)`, `(kind, email_key, created_at)`; rows older than 1 day purged by the worker loop (shared across processes, unlike the old in-memory limiter) |
+| voices | `engine_voice_name` (engine voice id sent to the engine), `sort_order`, `sample_object_key` |
+| tts_recordings | `audio_object_key`; `render_mode` CHECK (`SYNC`,`ASYNC`); `attempts INT DEFAULT 0`; `locked_until TIMESTAMPTZ NULL`; `source_module` CHECK widened to `STUDIO,PODCAST,STORY,API,MCP`; `error_code` values incl. `ENGINE_UNAVAILABLE`, `ENGINE_REJECTED`, `STORAGE_ERROR`, `QUOTA_RACE`, `ABANDONED`; partial index `(created_at) WHERE status = 'PENDING' AND render_mode = 'ASYNC'`; pg_trgm GIN on `original_text` |
 | story_segments | status CHECK `DRAFT,GENERATING,READY,MODIFIED_NEEDS_REGEN` |
-| system_dictionaries (new) | `id`, `name` unique, `kind`, `is_enabled`, `description`, `sort_order`, `updated_at` |
-| system_pronunciation_rules (new) | rule columns of `pronunciation_rules` with `dictionary_id` FK instead of `user_id`, plus `note TEXT NOT NULL DEFAULT ''` (lossless legacy import) and `rule_kind` CHECK (`REPLACE`,`ENGLISH_FALLBACK`) default `REPLACE` (fallback rows keep `phonetic_replacement = ''`; CHECK: `REPLACE` requires non-empty replacement) |
+| system_dictionaries (new) | `id`, `name` unique, `kind`, `is_enabled`, `description`, `sort_order`, `legacy_source_id TEXT NULL UNIQUE`, `updated_at` |
+| system_pronunciation_rules (new) | rule columns of `pronunciation_rules` with `dictionary_id` FK instead of `user_id`, plus `note TEXT NOT NULL DEFAULT ''` (lossless legacy import), `rule_kind` CHECK (`REPLACE`,`ENGLISH_FALLBACK`) default `REPLACE` (fallback rows keep `phonetic_replacement = ''`; CHECK: `REPLACE` requires non-empty replacement), generated `term_key` (`source_term` when case-sensitive, else `lower(source_term)`) with `UNIQUE (dictionary_id, term_key)` mirroring the legacy rule |
 | admin_audit_log (new) | `id BIGSERIAL`, `actor_user_id` FK `ON DELETE SET NULL`, `actor_label` (email or `cli:<os-user>`), `action VARCHAR(64)`, `target_type VARCHAR(32)`, `target_id TEXT`, `target_label TEXT`, `before JSONB`, `after JSONB`, `ip`, `created_at`; indexes `(created_at DESC)`, `(target_type, target_id)`; no FK on target so rows survive deletes |
-| background_jobs (new) | `id`, `kind`, `user_id`, `payload JSONB`, `status` (`QUEUED,RUNNING,SUCCEEDED,FAILED`), `attempts`, `locked_until`, `error_code`, `result_ref`, `created_at`, `updated_at`; index `(status, created_at)` |
+
+No generic jobs table in C1: an `ASYNC` `PENDING` recording is the queue item (claimed with `FOR UPDATE SKIP LOCKED` on `locked_until`), so job and recording state can never disagree. A generic queue arrives with the second job kind (C4 podcast/story).
+<!-- Updated: Red Team 2026-11-02 - recording-as-queue replaces background_jobs; added synthesis lease, throttle table, session absolute expiry, provenance ids, term_key unique -->
+
+Engine connection discipline (used by phases 10 and 13): never hold a DB session across an engine or storage call; commit before calling out and open a new short session afterwards.
 
 Extensions: `pgcrypto` (gen_random_uuid), `pg_trgm`.
 
@@ -43,16 +51,17 @@ Extensions: `pgcrypto` (gen_random_uuid), `pg_trgm`.
 Create (all under `src/vieneu_portal/` unless noted):
 - `__init__.py`, `__main__.py` (argparse dispatch: `serve`, `db upgrade|current`)
 - `config.py`, `errors.py`, `app.py` (`create_app()`, error handlers, router list), `routes_health.py`
-- `db/session_factory.py`, `db/base.py`, `db/models_users_and_sessions.py`, `db/models_voices_and_recordings.py`, `db/models_dictionaries.py`, `db/models_podcasts_and_stories.py`, `db/models_developer_and_billing.py`, `db/models_background_jobs.py`, `db/models_admin_audit_log.py`
+- `db/session_factory.py`, `db/base.py`, `db/models_users_and_sessions.py`, `db/models_voices_and_recordings.py`, `db/models_dictionaries.py`, `db/models_podcasts_and_stories.py`, `db/models_developer_and_billing.py`, `db/models_auth_throttle_events.py`, `db/models_admin_audit_log.py`
 - `db/database_backup_before_migrate.py`, `migrations/env.py`, `migrations/script.py.mako`, `migrations/versions/0001_baseline_spec_schema.py`, `alembic.ini`
 - `tests/portal/conftest.py` (creates a throwaway database per session from `VIENEU_PORTAL_TEST_DATABASE_URL`, runs `alembic upgrade head`, truncates per test), `tests/portal/test_schema_baseline.py`, `tests/portal/test_health_and_error_envelope.py`
-- `docker/docker-compose.portal.yml` (postgres:16 + minio + bucket-init only; phase 6 adds services)
+- `docker/docker-compose.portal.yml` (postgres:16 + minio + bucket-init only; phase 4 adds the engine services, phase 10 adds portal and worker)
 
-Modify: `pyproject.toml` (extra `portal = [fastapi, uvicorn[standard], sqlalchemy>=2, alembic, psycopg[binary]>=3, boto3, httpx]`, package find include `vieneu_portal*`, package-data for `alembic.ini`, `migrations/**`), `Makefile` (`portal-db-up`, `portal-test`).
+Modify: `pyproject.toml` (PEP 735 dependency group `portal = [fastapi, uvicorn[standard], sqlalchemy>=2, alembic, psycopg[binary]>=3, boto3, httpx, python-multipart]`, not an extra: an extra always drags the core engine deps (`onnxruntime`, `gradio`, `librosa`, `pyproject.toml:69-83`) while a group can be exported alone for the portal image; package find include `vieneu_portal*`, package-data for `alembic.ini`, `migrations/**`), `Makefile` (`portal-db-up`, `portal-test` using `uv sync --group portal`).
+<!-- Updated: Red Team 2026-11-02 - dependency group instead of extra so the portal image can be onnx/torch-free -->
 
 ## Implementation steps
-1. Add the `portal` extra and package registration; `uv lock`.
-2. Write `config.py` as a frozen dataclass loaded once from env with validation (fail fast on missing `DATABASE_URL`).
+1. Add the `portal` dependency group and package registration; `uv lock`. `vieneu_portal` must never import `vieneu` or `vieneu_preprocess` (import-linter style test in `test_health_and_error_envelope.py` scanning module imports).
+2. Write `config.py` as a frozen dataclass loaded once from env with validation (fail fast on missing `DATABASE_URL` or a `SECRET_KEY` shorter than 32 bytes).
 3. Write models mirroring DDL exactly (types, defaults, CHECKs, indexes); `server_default` for DB defaults.
 4. Hand-write `0001_baseline_spec_schema.py` (not autogenerate) so CHECKs/extensions/indexes are explicit; run autogenerate diff afterwards and require it empty.
 5. `db upgrade`: detect non-empty schema, run `pg_dump -Fc` to `BACKUP_DIR/portal-<utc>.dump`, then upgrade.
@@ -72,13 +81,13 @@ Modify: `pyproject.toml` (extra `portal = [fastapi, uvicorn[standard], sqlalchem
 |---|---|---|
 | Model/DDL drift | M x H | Empty-autogenerate test in CI |
 | Tests silently skipped without Postgres | M x M | Portal tests error (not skip) when the URL is set but unreachable; `make portal-test` always sets it |
-| `pg_dump` version mismatch with server | L x M | Compose pins postgres:16; portal image installs postgresql-client-16 (phase 6) |
+| `pg_dump` version mismatch with server | L x M | Compose pins postgres:16; portal image installs postgresql-client-16 (phase 10) |
 
 ## Rollback
-Additive only: delete `src/vieneu_portal/`, `tests/portal/`, the compose file and the extra. Engine and admin untouched in this phase.
+Additive only: delete `src/vieneu_portal/`, `tests/portal/`, the compose file and the dependency group. Engine and admin untouched in this phase.
 
 ## Security
-`DATABASE_URL` and S3 secrets only from env; never logged (settings `__repr__` masks secrets).
+`DATABASE_URL`, `SECRET_KEY` and S3 secrets only from env; never logged (settings `__repr__` masks secrets).
 
 ## Next
 Phases 2, 4, 7 can start.

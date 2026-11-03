@@ -2,7 +2,7 @@
 
 ## Context
 - User decision 2026-11-02: admin/super-user area in C1. Specs define no admin screens; this phase designs the API.
-- Parity source (old admin): user list/create/disable/reset-password/role and global dictionaries in `src/vieneu_admin/routes_users.py`, `routes_dictionaries.py`, `routes_dictionary_entries.py`, `routes_dictionary_transfer.py`, `store_accounts.py` (deleted in phase 6; read via `git show` of commit `5c930ac`). Guards kept: last active superadmin, no self-demotion.
+- Parity source (old admin, still present until phase 6 runs after phase 14): user list/create/disable/reset-password/role, self password change and global dictionaries in `src/vieneu_admin/routes_users.py`, `routes_account.py`, `routes_dictionaries.py`, `routes_dictionary_entries.py`, `routes_dictionary_transfer.py`, `store_accounts.py`. Guards kept: last active superadmin, no self-demotion. The old admin gated everything with one `require_admin` (`src/vieneu_admin/auth.py:84-87`), so it had no role-on-create rule; this API adds one.
 - Building blocks: role dependencies (phase 2), admin services + audit writer + system dictionary store (phase 5), storage/engine client/voice serializer (phase 3), recordings query/serializer (phase 10), import/export functions (phase 7).
 
 ## Overview
@@ -10,7 +10,8 @@ Priority P1. Role-guarded JSON API for user, quota, key, system dictionary, voic
 
 ## Key insights
 - Permission matrix lives in one module and is tested by enumerating every `/api/v1/admin` route from the app, so a new route cannot ship unguarded.
-- ADMIN manages `USER` accounts only; SUPERADMIN manages everyone and is the only role that changes roles. Prevents an ADMIN from disabling or resetting a SUPERADMIN.
+- ADMIN manages `USER` accounts only; SUPERADMIN manages everyone and is the only role that changes roles or creates `ADMIN`/`SUPERADMIN` accounts. `POST /users` with `role` other than absent/`USER` from an ADMIN -> `403 FORBIDDEN_ROLE` (service-level check from phase 5, not only the route matrix, because create has no existing target). Prevents an ADMIN from disabling, resetting or minting a SUPERADMIN. <!-- Updated: Red Team 2026-11-02 - role-on-create guard -->
+- System dictionary rule targets are moderated on save/import (phase 5 store), same as account rules.
 - Admin token adjustment is the only counter writer besides metering: atomic `UPDATE ... SET token_balance = token_balance + :delta WHERE id = :id AND token_balance + :delta >= 0`, with a mandatory reason.
 
 ## Requirements
@@ -25,8 +26,9 @@ All under `/api/v1/admin`, `require_admin`, CSRF on mutations, errors in the sta
 | Voices | `GET /voices` (incl. inactive); `PATCH /voices/{id} {name?, gender?, region?, tags?, language_label?, is_active?, sort_order?}`; `PUT /voices/{id}/avatar` (png/jpg/webp <= 1 MB) and `DELETE`; `PUT /voices/{id}/sample` (mp3/wav <= 5 MB); `POST /voices/{id}/sample/render {text?}` (engine render, same function as the CLI) |
 | Audit | `GET /audit-log?actor=&action=&target_type=&target_id=&from=&to=&page=` (read-only; no update/delete endpoint exists) |
 
-- Audit row: action (`user.create`, `user.disable`, `user.role_change`, `user.password_reset`, `user.delete`, `user.tokens_adjust`, `user.plan_update`, `api_key.revoke`, `recording.delete`, `sysdict.*`, `voice.*`), actor, target, `before`/`after` with changed fields only; never passwords or hashes; token adjustments record delta, reason, resulting balance.
-- User delete: collect the user's object keys, delete the row (FK cascades recordings, rules, keys, sessions), commit, then delete objects best effort; audit keeps email in `target_label`.
+- Audit row: action (`user.create`, `user.disable`, `user.role_change`, `user.password_reset`, `user.delete`, `user.tokens_adjust`, `user.plan_update`, `api_key.revoke`, `recording.delete`, `sysdict.*`, `voice.*`, plus the read event `user.recordings_view` when an admin lists another user's recordings), actor, target, `before`/`after` with changed fields only; never passwords or hashes; token adjustments record delta, reason, resulting balance.
+- User delete: first transaction sets `is_active = false` and revokes sessions (an in-flight finalize then fails its charge UPDATE on `is_active` and deletes its own object); second transaction deletes the row (FK cascades recordings, rules, keys, sessions); after commit delete objects by prefix `recordings/<user>/` (not a key snapshot, so late uploads are caught) best effort; audit keeps email in `target_label`. <!-- Updated: Red Team 2026-11-02 - delete races with in-flight finalize -->
+- Token adjustment and plan updates run through the same conditional-UPDATE style as metering and never touch `synthesis_lock_until`.
 - Uploads: size cap before full read; type by magic bytes, not filename; stored under `voices/avatars/<id>.<ext>`, `voices/samples/<id>.mp3|wav`.
 
 ## Related code files
@@ -34,13 +36,13 @@ Create: `src/vieneu_portal/admin_api/admin_permission_matrix.py`, `admin_api/rou
 Modify: `src/vieneu_portal/app.py` (register admin routers), `tests/portal/test_quota_atomic_charge.py` (allow-list adds `token_and_plan_adjustment_service.py`).
 
 ## Implementation steps
-1. Permission matrix + route-enumeration test (USER -> 403 on every admin route; ADMIN -> 403 on SUPERADMIN-only routes and on non-USER targets).
-2. Users routes on phase 5 services; guards tests over HTTP (last superadmin, self-demotion, self-delete).
+1. Permission matrix + route-enumeration test (USER -> 403 on every admin route; ADMIN -> 403 on SUPERADMIN-only routes, on non-USER targets, and on `POST /users` with `role=ADMIN` or `role=SUPERADMIN`).
+2. Users routes on phase 5 services; guards tests over HTTP (last superadmin, self-demotion, self-delete); delete during an in-flight finalize (engine double slow render) leaves no object under `recordings/<user>/` and no charge.
 3. Token/plan service + concurrency test (adjust racing with generate never yields negative balance).
 4. Keys and recordings routes reusing phase 10 query/serializer.
 5. System dictionary routes on phase 5 store; JSON and txt import/export round-trip; `ENGLISH_FALLBACK` rules round-trip as `mode: "en"`.
 6. Voice routes: edit, avatar/sample upload with sniffing, render sample; edited row survives `voices sync`.
-7. Audit log route; test every mutation endpoint writes exactly one row with no secret fields.
+7. Audit log route; test every mutation endpoint writes exactly one row with no secret fields, and listing another user's recordings writes one `user.recordings_view` row.
 
 ## Todo
 - [ ] matrix  - [ ] users  - [ ] tokens/plan  - [ ] keys/recordings  - [ ] system dicts  - [ ] voices  - [ ] audit  - [ ] tests
@@ -52,7 +54,7 @@ Modify: `src/vieneu_portal/app.py` (register admin routers), `tests/portal/test_
 ## Risk
 | Risk | L x I | Mitigation |
 |---|---|---|
-| Privilege escalation via role edits | L x H | SUPERADMIN-only role route; target-role check; guards lock rows |
+| Privilege escalation via role edits or create | L x H | SUPERADMIN-only role route; role-on-create check in the service; target-role check; guards lock rows |
 | Audit gaps | M x M | One writer function in the same transaction; per-endpoint test |
 | Malicious uploads (SVG/HTML as avatar) | M x M | Magic-byte allow-list (png/jpg/webp, mp3/wav); served via presigned URL with fixed content type |
 
@@ -60,7 +62,7 @@ Modify: `src/vieneu_portal/app.py` (register admin routers), `tests/portal/test_
 Unregister admin routers; CLI keeps working on the same services; audit rows remain.
 
 ## Security
-Admin routes require session + role + CSRF; no impersonation feature; passwords and hashes never returned or audited; admin listening/viewing is not audited (open question 2).
+Admin routes require session + role + CSRF; no impersonation feature; passwords and hashes never returned or audited; admin access to another user's recordings is audited as `user.recordings_view` (one row per list request, not per presigned URL); other reads are not audited (Validation Session 1).
 
 ## Next
 Phase 14 builds the admin pages on this API.

@@ -1,0 +1,30 @@
+{
+  "_note": "Phase 15 migration rehearsal. No real vieneu_data/admin.sqlite3 exists in this repo/environment, so this runs python -m vieneu_portal migrate-sqlite against tests/fixtures/legacy_admin_sqlite_builder.py's fixture DB (2 users incl. one disabled, 2 api keys incl. one revoked, 1 dictionary pack with 4 edge-case rules: a case-sensitive KPI/kpi duplicate, an `en`-mode entry with a replacement which must become REPLACE not ENGLISH_FALLBACK, and a unicode `en`-mode entry with no replacement which must become ENGLISH_FALLBACK). Also re-run with --apply against a disposable Postgres database and verified by direct SQL query: users.role mapped admin->SUPERADMIN/user->USER, is_active preserved, emails synthesized as <username>@migrated.invalid, legacy_source_id set (sqlite:users:<id>), and the two `en`-mode rules split correctly into REPLACE vs ENGLISH_FALLBACK by rule_kind. paths below are sandbox scratch paths, not meaningful outside this session.",
+  "sqlite_path": "/private/tmp/claude-501/-Users-sondn2010gmail-com-RiderProjects-VieNeu-TTS-fork/a33bc22d-8d39-4cd7-bbc5-8d3074d61c33/scratchpad/migration-backups/legacy-admin-rehearsal-20261103T102234Z.sqlite3",
+  "mode": "dry-run",
+  "users_total": 2,
+  "users_inserted": 2,
+  "users_skipped_existing": 0,
+  "api_keys_total": 2,
+  "api_keys_inserted": 2,
+  "api_keys_skipped_existing": 0,
+  "dictionaries_total": 1,
+  "dictionaries_inserted": 1,
+  "dictionaries_skipped_existing": 0,
+  "rules_total": 4,
+  "rules_inserted": 4,
+  "sessions_counted_not_migrated": 0,
+  "needs_email": [
+    {
+      "username": "root",
+      "email": "root@migrated.invalid"
+    },
+    {
+      "username": "disabled_user",
+      "email": "disabled_user@migrated.invalid"
+    }
+  ],
+  "conflicts": [],
+  "lost_rows": 0,
+  "backup_path": "/private/tmp/claude-501/-Users-sondn2010gmail-com-RiderProjects-VieNeu-TTS-fork/a33bc22d-8d39-4cd7-bbc5-8d3074d61c33/scratchpad/migration-backups/portal-20261103T102234Z.dump"
+}

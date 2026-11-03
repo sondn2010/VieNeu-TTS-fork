@@ -386,17 +386,32 @@ Endpoint: `POST /v1/audio/speech`, `GET /v1/models`, `GET /v1/voices`, `POST /v1
 
 📊 **[docs/streaming.vi.md](docs/streaming.vi.md)** — toàn bộ số đo trên RTX 3060 (TTFA / RTF / số luồng theo `max_streams`), dự đoán cho GPU nhỏ hơn, số đo CPU, và các lưu ý tinh chỉnh (ví dụ request đầu tiên sau khi GPU rỗi chậm thêm 100–300 ms vì GPU hạ xung).
 
-### Trang quản trị web
+### Portal người dùng
 
-API streaming còn phục vụ trang quản trị tại `http://localhost:8000/admin`: người dùng và API key của họ, từ điển phát âm toàn cục (nhập/xuất JSON, bảy bộ mẫu dùng ngay), **Script Lab** biến một câu chuyện thành kịch bản TTS nhiều giọng và render bản nghe thử, cùng trang Help ngay trong ứng dụng. Request API có thể bật bộ tiền xử lý truyện bằng `"preprocess": true`, và mọi văn bản đều dùng được thẻ nghỉ dạng số như `[0.5]` (0–5 s).
-
-> ⚠️ **Thay đổi không tương thích:** khi trang quản trị bật (mặc định), **mọi** lệnh gọi `/v1/*` đều cần key — tạo ở `/admin/keys` (`api_key="vn_..."` thay cho `"x"` ở trên) hoặc đặt `VIENEU_API_KEY`. `VIENEU_ADMIN=0` khôi phục API không cần khoá như cũ. CSDL mới (ví dụ volume Docker `vieneu_data` mới) cần `VIENEU_ADMIN_USER` và `VIENEU_ADMIN_PASSWORD` ở lần khởi động đầu, nếu không server từ chối khởi động.
+Một dịch vụ FastAPI + PostgreSQL riêng (`src/vieneu_portal/`) phục vụ một
+ứng dụng web Next.js: đăng ký, Phòng thu để tạo và stream giọng nói, thư
+viện Giọng nói của tôi, từ điển phát âm theo từng tài khoản, và khu vực
+quản trị (người dùng, hạn mức, khoá API, từ điển hệ thống, danh mục giọng
+đọc, nhật ký quản trị). Portal gọi API streaming ở trên như một dịch vụ nội
+bộ, chỉ dùng khoá — engine không còn trang quản trị hay CSDL riêng.
 
 ```bash
-VIENEU_ADMIN_USER=admin VIENEU_ADMIN_PASSWORD='doi-mat-khau-nay' uv run python -m apps.openai_speech
+cp .env.example .env   # đặt VIENEU_PORTAL_SECRET_KEY, VIENEU_ENGINE_SERVICE_KEY
+make portal-up         # postgres, minio, portal, worker → http://localhost:8100
+docker compose -f docker/docker-compose.portal.yml --profile cpu up -d engine
 ```
 
-📘 **[docs/user-guide.vi.md](docs/user-guide.vi.md)** — đăng nhập, API key, gọi bằng `curl` / OpenAI SDK, Script Lab, từ điển, xử lý sự cố. 🛠️ **[docs/web-admin-functions.vi.md](docs/web-admin-functions.vi.md)** — mọi route và quyền, biến môi trường, CSDL và sao lưu, thẻ nghỉ, định dạng từ điển, quy tắc tiền xử lý, CLI, bảo mật.
+> ⚠️ **Thay đổi không tương thích:** trang quản trị SQLite cũ của API
+> streaming (`/admin`, `VIENEU_ADMIN`, `vieneu_admin`) không còn tồn tại.
+> Engine giờ từ chối khởi động khi `HOST` không phải loopback nếu thiếu
+> `VIENEU_API_KEY`, và khoá `vn_...` cấp trước đây không còn dùng được
+> trực tiếp với engine.
+
+📘 **[docs/user-guide.vi.md](docs/user-guide.vi.md)** — đăng ký, điều khoản,
+Phòng thu (stream và tạo giọng), Giọng nói của tôi, hạn mức, xử lý sự cố.
+🛠️ **[docs/portal-operations.vi.md](docs/portal-operations.vi.md)** — kiến
+trúc, biến môi trường, khu vực quản trị, quyền và rào chắn, thứ tự ưu tiên
+từ điển, và quy trình di chuyển dữ liệu SQLite cho hệ thống đang chạy.
 
 ### Web UI trong Docker
 

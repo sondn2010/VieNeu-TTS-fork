@@ -28,7 +28,7 @@ Modify: `portal-web/src/lib/i18n/messages-admin-vi.ts`, `messages-admin-en.ts`.
 4. Voices page with media uploads and render.
 5. Audit log page.
 6. Component tests: USER redirected away; role select disabled for self and hidden for ADMIN; token form requires reason and non-zero delta; rules editor marks etag conflict.
-7. Playwright `admin-pages.spec.ts`: superadmin (created by CLI in test setup) creates a user, disables/enables, resets password (user logs in with new one), grants 1 000 tokens (user sidebar shows it), changes role, sees audit rows for each step; ADMIN cannot open role select; last-superadmin demotion shows the guard message; edits a voice name and the Studio voice list shows it; imports a txt into a system pack and exports it.
+7. Playwright `admin-pages.spec.ts`: superadmin (created by CLI in test setup) creates a user, disables/enables, resets password (user logs in with new one), grants 1 000 tokens (user sidebar shows it), changes role, sees audit rows for each step; ADMIN cannot open role select and its create dialog has no role field (API also rejects a forged `role`); last-superadmin demotion shows the guard message; edits a voice name and the Studio voice list shows it; imports a txt into a system pack and exports it.
 
 ## Todo
 - [ ] layout guard + hooks  - [ ] users  - [ ] dictionaries  - [ ] voices  - [ ] audit log  - [ ] component tests  - [ ] E2E

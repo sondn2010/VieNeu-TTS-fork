@@ -18,7 +18,8 @@ Studio (`/studio/`, `?voice=<id>` preselects):
 - Editor: textarea, placeholder per spec, `Chèn câu mẫu` (random from a list that includes the TC-04 sentence), drag-and-drop `.txt`.
 - Counter pill `N ký tự · ~T token · còn D` from shared functions and profile (`daily_char_remaining`, `token_balance`, `client_config`); red + disabled `Tạo giọng nói` when `T > token_balance`, `N > daily_char_remaining`, or `N > tts_max_chars`.
 - `Phát ngay`: POST `/tts/stream`, schedule PCM16 chunks on WebAudio; stop button; note that speed applies only to `Tạo giọng nói`.
-- `Tạo giọng nói`: POST `/tts/generate`; 200 -> prepend recording, update quota cache from response; 202 -> poll `GET /tts/recordings/{id}` every 2 s (max 10 min) showing progress; errors mapped: `CONTENT_POLICY_VIOLATION` (red banner with category text), `402 *` (quota message), `TERMS_NOT_ACCEPTED` (reopen modal), `503` (retry later).
+- `Tạo giọng nói`: POST `/tts/generate`; 200 -> prepend recording, update quota cache from response; 202 -> poll `GET /tts/recordings/{id}` every 2 s until a terminal state, giving up only after `2 x estimated_seconds + 60 s` (from the response), showing progress; errors mapped: `CONTENT_POLICY_VIOLATION` (red banner with category text, also when a dictionary rule introduced the text), `TEXT_TOO_LONG_AFTER_PROCESSING` (explain dictionary/maths expansion), `SYNTHESIS_IN_PROGRESS` (one synthesis at a time message), `402 *` (quota message), `TERMS_NOT_ACCEPTED` (reopen modal), `503` (retry later). `Phát ngay` and `Tạo giọng nói` stay disabled while a stream, sync generate or polled async job of this user is in flight. <!-- Updated: Red Team 2026-11-02 - lease, processed cap, poll limit -->
+- Failed recordings with `ABANDONED` show "interrupted, try again" and can be deleted.
 - Recent recordings: `GET /tts/recordings?limit=5`, count badge, refresh, cards (play/pause, one-line snippet, voice name + `V4` badge, `146.0s`, `HH:mm DD/MM/YYYY`), download button, `♪` button disabled (music mixing not in C1).
 
 My Voices (`/voices/`):
@@ -28,7 +29,7 @@ My Voices (`/voices/`):
 - Empty and error states.
 
 Build/E2E:
-- `docker/Dockerfile.portal` gains a `node:22` stage running `npm ci && npm run build`, copying `out/` to `WEB_DIST_DIR`.
+- `docker/Dockerfile.portal` (created in phase 10) gains a `node:22` stage running `npm ci && npm run build`, copying `out/` to `WEB_DIST_DIR`.
 - Playwright suite against the compose stack (CPU engine): signup -> TC-01 modal -> TC-03 tag insert + counter -> generate short text -> TC-07 search/filter footer numbers -> TC-09 subset (sidebar balance equals generate response quota and profile).
 
 ## Related code files

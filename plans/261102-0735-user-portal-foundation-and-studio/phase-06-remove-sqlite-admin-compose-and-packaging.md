@@ -1,58 +1,63 @@
-# Phase 06: Remove the SQLite admin, full dev compose, packaging cleanup
+# Phase 06: Remove the SQLite admin and the engine's admin wiring
+
+<!-- Updated: Red Team 2026-11-02 - runs at the end (after phases 12 and 14) instead of before the portal works; absorbs the engine admin stripping formerly in phase 4; compose stack and portal image moved to phase 10; consumer list completed -->
 
 ## Context
-- Package to delete: `src/vieneu_admin/` (28 modules, templates, static; seed already moved in phase 5).
-- Remaining references (re-grep before deleting): `pyproject.toml` (`packages.find include` `vieneu_admin*`, package-data `vieneu_admin = [...]`, deps comments for `jinja2`/`markdown-it-py`), `docker/Dockerfile.cpu:18,34`, `docker/Dockerfile.gpu:20,51`, `Makefile:13,123` (engine compose files and `.env.example` admin block are cleaned in phase 4), `tests/test_admin_*.py` (6 files).
-- `jinja2` and `markdown-it-py` have no importer outside `vieneu_admin` (grep of `src/` and `apps/`, 2026-11-02).
+- Runs only after the portal user pages (phase 12) and admin pages (phase 14) exist, so the old admin is never removed before its replacement works.
+- Package to delete: `src/vieneu_admin/` (27 `.py` modules plus `seed/`, `static/`, `templates/`; the seed packs were copied to the portal in phase 5).
+- Engine admin coupling to remove (line refs as of 2026-11-02; re-grep, phase 4 added lines): imports `apps/openai_speech.py:102-104`; Script Lab provider `:265-289`; admin setup/bootstrap/close `:293-372`; DB-key branch in `_auth` `:374-389`; `_is_admin_path` + its use in handlers `:400-422`; startup/shutdown admin calls `:425-438`; `/` redirect to `/admin/` `:441-445`; `STORE.enabled_lexicon()` in `_preprocess_input` `:518`; admin hints in `main()` `:703-723`; module docstring `:42-70`.
+- Remaining references (re-grep before deleting): `pyproject.toml` (`packages.find include` `vieneu_admin*` `:174`, package-data `vieneu_admin = [...]` `:179`, explicit `jinja2`/`markdown-it-py` deps), `docker/Dockerfile.cpu:17-18,34-35`, `docker/Dockerfile.gpu:19-20,51` (`VIENEU_ADMIN_DB`, `VIENEU_DOCS_DIR`, help-only `COPY docs/`), `Makefile:13,123`, `docker/docker-compose.yml:83-88,131-136` and `docker/docker-compose.prod.yml:43-48` (`VIENEU_ADMIN*`, `VIENEU_COOKIE_SECURE`), `.env.example:36-50` (admin block, `VIENEU_COOKIE_SECURE`, `VIENEU_DOCS_DIR`), `tests/test_openai_speech.py` (admin fixtures `:17-19`, `:53-55`, DB-key cases `:166-260`, `from test_admin_routes import login, post` `:17`), `tests/test_admin_*.py` (6 files). Admin-only env consumers: `VIENEU_COOKIE_SECURE` (`src/vieneu_admin/auth.py:29`), `VIENEU_DOCS_DIR` (`src/vieneu_admin/web_paths.py:16`).
+- README admin lines (`README.md:386-393`, `README.vi.md:393-396`) belong to phase 15; `.claude/agent-memory/**` is tooling state, not product code.
+- `jinja2` and `markdown-it-py` have no importer outside `vieneu_admin` (grep of `src/` and `apps/`, 2026-11-02); Gradio declares jinja2 (`uv.lock:949-965`).
 
 ## Overview
-Priority P1. Deletes the replaced admin app and its tests (coverage now lives in `tests/portal/`), adds the full portal dev stack to compose, and builds a torch-free portal image.
+Priority P1. The engine becomes an internal service with one service key and no DB or admin; the replaced admin app, its tests and its config are deleted. Behavior coverage already lives in `tests/portal/`.
 
 ## Requirements
+- Engine: remove every `vieneu_admin` import, the `VIENEU_ADMIN*` handling, Script Lab provider, `/admin` mount and DB-key branch. `_auth` = constant-time compare against `VIENEU_API_KEY`. Startup guard tightened: non-loopback bind without `VIENEU_API_KEY` exits non-zero. `/` returns 404 JSON. `_preprocess_input` calls `vieneu_preprocess.preprocess_safely(raw, ())` (prosody + pause tags only; global dictionaries now apply only through the portal).
+- Engine compose files (`docker-compose.yml`, `docker-compose.prod.yml`): drop `VIENEU_ADMIN*` and `VIENEU_COOKIE_SECURE`; `VIENEU_API_KEY=${VIENEU_API_KEY:?set VIENEU_API_KEY}` wherever `HOST=0.0.0.0`.
 - No file imports `vieneu_admin`; `uv run pytest` (engine suite) green.
 - Deleted test -> replacement map (no lost behavior coverage):
 | Deleted | Replaced by |
 |---|---|
-| `test_admin_security.py` | `tests/portal/test_security_primitives.py` (phase 2) |
+| `test_admin_security.py` | `tests/portal/test_security_primitives.py`, `test_auth_throttle_and_signup_switch.py` (phase 2) |
 | `test_admin_migrations.py` | `tests/portal/test_schema_baseline.py` (phase 1) |
 | `test_admin_cli.py` | `tests/portal/test_portal_admin_cli.py` (phase 5) |
 | `test_admin_store.py` | `test_system_dictionary_store.py`, `test_role_change_guards.py`, `test_auth_signup_login_logout.py` |
-| `test_admin_routes.py`, `test_admin_routes_content.py` | `tests/portal/test_admin_api_*.py` (phase 13) and admin page tests (phase 14); Script Lab is dropped, `vieneu-preprocess` CLI remains the tool |
-- Between this phase and phase 14, web user management is CLI-only (same services the admin API will use).
-- `docker/docker-compose.portal.yml` services: `postgres` (16, volume, healthcheck), `minio` + `minio-init` (bucket, private), `engine` (build `Dockerfile.cpu`, profile `cpu`; `engine-gpu` with `Dockerfile.gpu`, profile `gpu`; internal network only; `VIENEU_API_KEY=${VIENEU_ENGINE_SERVICE_KEY}`), `portal` (build `Dockerfile.portal`, runs `db upgrade` then `serve`, port 8100 published).
-- `docker/Dockerfile.portal`: python:3.12-slim, `postgresql-client-16` (for `pg_dump`), installs `.[portal]` without torch/onnx; non-root user.
+| `test_admin_routes.py`, `test_admin_routes_content.py` | `tests/portal/test_admin_api_*.py` (phase 13) and admin page tests (phase 14); Script Lab replaced by `python -m vieneu_portal text preview` (phase 5) |
+| DB-key cases in `tests/test_openai_speech.py` | env-key auth tests kept; refuse-to-start test (phase 4) tightened to key-required |
 
 ## Related code files
 Delete: `src/vieneu_admin/**`, `tests/test_admin_cli.py`, `tests/test_admin_migrations.py`, `tests/test_admin_routes.py`, `tests/test_admin_routes_content.py`, `tests/test_admin_security.py`, `tests/test_admin_store.py`.
-Modify: `pyproject.toml` (drop `vieneu_admin*`, its package-data, `jinja2` and `markdown-it-py` explicit deps), `docker/Dockerfile.cpu`, `docker/Dockerfile.gpu` (drop `VIENEU_ADMIN_DB`, Help docs COPY comment), `docker/docker-compose.portal.yml`, `Makefile` (`api` help text, add `portal-up`, `portal-down`, `portal-migrate-sqlite`), `.env.example` (portal section: DB URL, S3, engine URL/service key, quotas).
-Create: `docker/Dockerfile.portal`.
+Modify: `apps/openai_speech.py`, `tests/test_openai_speech.py`, `pyproject.toml` (drop `vieneu_admin*`, its package-data, `jinja2` and `markdown-it-py` explicit deps), `docker/Dockerfile.cpu`, `docker/Dockerfile.gpu` (drop `VIENEU_ADMIN_DB`, `VIENEU_DOCS_DIR`, help-only `COPY docs/`), `docker/docker-compose.yml`, `docker/docker-compose.prod.yml`, `Makefile` (`api` help text), `.env.example` (drop admin block, `VIENEU_COOKIE_SECURE`, `VIENEU_DOCS_DIR`).
 
 ## Implementation steps
-1. Re-grep `vieneu_admin|VIENEU_ADMIN` across repo (excluding `plans/`, `docs/` handled in phase 15); fix every hit listed above.
-2. Delete package and tests; run `uv run pytest` and `make portal-test`.
-3. Write `Dockerfile.portal` and extend compose; `make portal-up` brings the stack up; portal health 200; engine reachable from portal container only.
-4. `uv lock` after dependency removals; confirm `pip install vieneu` core still installs Gradio fine (jinja2 is a Gradio transitive dep).
+1. Re-grep `vieneu_admin|VIENEU_ADMIN|VIENEU_COOKIE_SECURE|VIENEU_DOCS_DIR|test_admin_routes` across the repo (excluding `plans/`, `docs/`, `README*.md`, `.claude/`); fix every hit listed above.
+2. Strip the engine admin wiring; simplify `_auth` and error handlers (no admin path exception); tighten the startup guard; update engine tests.
+3. Delete package and tests; `uv lock` after dependency removals; confirm a fresh `pip install vieneu` still installs Gradio fine.
+4. Run `uv run pytest`, `make portal-test`, `make portal-test-e2e`.
 
 ## Todo
-- [ ] re-grep refs  - [ ] delete package/tests  - [ ] pyproject/Dockerfiles/Makefile/env  - [ ] Dockerfile.portal  - [ ] compose stack  - [ ] full test runs
+- [ ] re-grep refs  - [ ] strip engine admin  - [ ] delete package/tests  - [ ] pyproject/Dockerfiles/compose/Makefile/env  - [ ] full test runs
 
 ## Success criteria
-- `git grep -n "vieneu_admin\|VIENEU_ADMIN" -- ':!plans' ':!docs'` empty.
-- `make portal-up` -> `curl :8100/api/v1/health` 200; `docker compose exec portal python -m vieneu_portal voices sync` inserts 25 voices.
-- Both test suites green.
+- `git grep -n "vieneu_admin\|VIENEU_ADMIN\|VIENEU_COOKIE_SECURE\|VIENEU_DOCS_DIR" -- ':!plans' ':!docs' ':!README*.md' ':!.claude'` empty (phase 15 cleans docs and READMEs).
+- Engine on `HOST=0.0.0.0` without `VIENEU_API_KEY` refuses to start; `docker compose -f docker/docker-compose.yml config` fails without the key.
+- All test suites green.
 
 ## Risk
 | Risk | L x I | Mitigation |
 |---|---|---|
-| Admins lose Script Lab; web user management gap until phase 14 | M x M | Script Lab dropped by decision (`vieneu-preprocess` CLI covers it); web user management restored in phases 13-14, CLI meanwhile; docs in phase 15 |
-| Existing deployments with SQLite data upgrade blindly | M x H | Engine no longer reads SQLite; docs give the order: back up volume -> `migrate-sqlite --dry-run` -> `--apply` |
+| Admins lose Script Lab | L x M | `text preview` CLI gives the exact portal output; docs in phase 15 |
+| Existing deployments with SQLite data upgrade blindly | M x H | Engine no longer reads SQLite; docs give the order: back up volume -> `migrate-sqlite --dry-run` -> `--apply` -> `system-dict seed` only if no SQLite existed |
+| DB-issued `vn_...` keys stop working at the engine | M x M | Accepted breaking change (keys move to the C2 developer API); `VIENEU_API_KEY` remains; documented in phase 15 |
 | Removing jinja2 explicit dep breaks Gradio | L x M | Gradio declares it; verify with fresh venv install |
 
 ## Rollback
-`git revert` this phase's commit restores the package and tests; data untouched (SQLite file stays in `vieneu_data`).
+`git revert` this phase's commit restores the package, engine wiring and tests; data untouched (SQLite file stays in `vieneu_data`).
 
 ## Security
-Engine port not published in portal compose; MinIO console bound to localhost; secrets only via `.env`.
+Engine port not published in the portal compose; the engine cannot start publicly without a key; secrets only via `.env`.
 
 ## Next
-Phase 10 builds on the running stack.
+Phase 15 acceptance and docs.

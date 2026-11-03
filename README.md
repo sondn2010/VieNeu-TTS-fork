@@ -383,17 +383,31 @@ Endpoints: `POST /v1/audio/speech`, `GET /v1/models`, `GET /v1/voices`, `POST /v
 
 📊 **[docs/streaming.md](docs/streaming.md)** — every measurement on an RTX 3060 (TTFA / RTF / streams vs `max_streams`), estimates for smaller GPUs, the CPU numbers, and tuning notes (e.g. the first request after the GPU idles pays +100–300 ms until it clocks up).
 
-### Admin web app
+### User portal
 
-The streaming API also serves an admin app at `http://localhost:8000/admin`: users and their API keys, global pronunciation dictionaries (JSON import/export, seven ready seed sets), a **Script Lab** that turns a story into a multi-voice TTS script and renders a preview, and an in-app Help page. API requests can opt in to the story preprocessor with `"preprocess": true`, and any text may carry numeric pause tags such as `[0.5]` (0–5 s).
-
-> ⚠️ **Breaking change:** with the admin app on (default), **every** `/v1/*` call needs a key — create one at `/admin/keys` (`api_key="vn_..."` instead of `"x"` above) or set `VIENEU_API_KEY`. `VIENEU_ADMIN=0` restores the old keyless API. A fresh database (e.g. a new Docker `vieneu_data` volume) needs `VIENEU_ADMIN_USER` and `VIENEU_ADMIN_PASSWORD` on the first start, or the server refuses to start.
+A separate FastAPI + PostgreSQL service (`src/vieneu_portal/`) backs a Next.js
+web app: signup, a Studio to generate and stream speech, a My Voices library,
+per-account pronunciation dictionaries, and an admin area (users, quotas, API
+keys, system dictionaries, voice catalog, audit log). It talks to the speech
+API above as an internal, key-only service — the engine itself has no admin
+app or database of its own.
 
 ```bash
-VIENEU_ADMIN_USER=admin VIENEU_ADMIN_PASSWORD='change-me-please' uv run python -m apps.openai_speech
+cp .env.example .env   # set VIENEU_PORTAL_SECRET_KEY, VIENEU_ENGINE_SERVICE_KEY
+make portal-up         # postgres, minio, portal, worker → http://localhost:8100
+docker compose -f docker/docker-compose.portal.yml --profile cpu up -d engine
 ```
 
-📘 **[docs/user-guide.md](docs/user-guide.md)** — log in, API keys, `curl` / OpenAI SDK calls, Script Lab, dictionaries, troubleshooting. 🛠️ **[docs/web-admin-functions.md](docs/web-admin-functions.md)** — every route and role, environment variables, database and backups, pause tags, dictionary format, preprocessor rules, CLI, security.
+> ⚠️ **Breaking change:** the speech API's old SQLite admin app (`/admin`,
+> `VIENEU_ADMIN`, `vieneu_admin`) no longer exists. The engine now refuses to
+> start on a non-loopback `HOST` unless `VIENEU_API_KEY` is set, and
+> previously-issued `vn_...` keys no longer work against it directly.
+
+📘 **[docs/user-guide.md](docs/user-guide.md)** — signup, the terms, Studio
+(stream vs generate), My Voices, quotas, troubleshooting.
+🛠️ **[docs/portal-operations.md](docs/portal-operations.md)** — architecture,
+environment settings, the admin area, roles and guards, dictionary
+precedence, and the SQLite migration runbook for an existing deployment.
 
 ### Web UI in Docker
 

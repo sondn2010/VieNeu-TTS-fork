@@ -2,7 +2,7 @@
 
 ## Context
 - Algorithm reference: `07_pronunciation_dictionary_and_nlp.md:93-177` (single-pass longest match), parser `:179-186`; master `vieneu_tts_user_specs.md:540-556` (separator priority `=`, `→`, tab, `,`; 2000 cap).
-- Acceptance: TC-12, TC-13, TC-14 in `09_qa_acceptance_criteria.md:23-25`. Counter rule: master `:177-180`.
+- Acceptance: TC-12, TC-13, TC-14 in `09_qa_acceptance_criteria.md:23-25`. Counter rule: master `:177-180` says `text.length` (UTF-16 units); this plan deliberately overrides it with NFC code points (plan.md spec-conflict table).
 - Existing protected-span idea: `src/vieneu_preprocess/lexicon_mapper.py:21` (`<en>`, `[...]`, `<|...|>` untouched).
 
 ## Overview
@@ -17,9 +17,10 @@ Priority P1. Three pure functions implemented twice (Python for server, TS for b
 ## Requirements
 - `count_chars(text) = len(NFC(text))`; `estimate_tokens(chars, rate_milli) = (chars * rate_milli + 999) // 1000` (integers only on both sides).
 - Rule type carries `layer`: `ACCOUNT` (rank 0), `SYSTEM` (rank 1), `ENGLISH_FALLBACK` (rank 2; system rows with `rule_kind = ENGLISH_FALLBACK`).
-- `apply_pronunciation_rules(text, rules)`: input NFC; enabled rules with non-empty trimmed source; stable sort by (source length in code points desc, layer rank asc, list order asc); at each position outside protected spans take the first matching rule (case and whole-word checks per spec, word char = Unicode `L*`, `N*` or `_`); emit target (`ENGLISH_FALLBACK` emits `<en>` + the matched text with its original casing + `</en>`), jump, no rescan.
+- `compile_rules(rules) -> CompiledRuleSet`: sorted list plus an index keyed by the case-folded first code point (required, not optional), and `source_terms` for the phase 8 normalizer; immutable so callers can cache it. <!-- Updated: Red Team 2026-11-02 - index required, compiled set cacheable -->
+- `apply_pronunciation_rules(text, compiled)`: input NFC; enabled rules with non-empty trimmed source; stable sort by (source length in code points desc, layer rank asc, list order asc); at each position outside protected spans take the first matching rule (case and whole-word checks per spec, word char = Unicode `L*`, `N*` or `_`); emit target (`ENGLISH_FALLBACK` emits `<en>` + the matched text with its original casing + `</en>`), jump, no rescan.
 - Precedence (user decision): longest match wins across the combined set; on equal length the account rule beats the system rule, which beats the English fallback; then list order (account table order, system pack order then entry order). This supersedes the earlier "system first" ordering.
-- `<en>` interpretation (to confirm): an English term with a dictionary rule (account or system `REPLACE`) is read by that rule; otherwise a fallback-list term is wrapped in `<en>...</en>`; anything else is left for the engine.
+- `<en>` interpretation (confirmed, Validation Session 1): an English term with a dictionary rule (account or system `REPLACE`) is read by that rule; otherwise a fallback-list term is wrapped in `<en>...</en>`; anything else is left for the engine.
 - `parse_dictionary_import(text) -> (rules, errors)`: strip BOM, split `\r?\n`, trim, skip blank and `#` lines; split by priority separator; trim parts; empty side or length > 255 -> error with line number; defaults whole_word=true, case_sensitive=false, enabled=true; duplicate sources inside the file: last line wins.
 - `merge_imported_rules(existing, imported)`: imported block first (file order), then existing minus conflicts. Conflict: equal ignoring case when either rule is case-insensitive, else exact equal. Result > 2000 -> `DICTIONARY_LIMIT_EXCEEDED` (no truncation).
 - `validate_rule`: no newline/tab in either side; source must not contain `=` (export round-trip); lengths 1-255.
@@ -41,14 +42,14 @@ Create:
 
 ## Success criteria
 - Same vector files drive `pytest tests/portal/test_text_contract_vectors.py` and `vitest run`; both green; no vector is skipped on either side.
-- Matcher is O(n x rules) worst case; 20 000-char text with 2 000 rules completes < 200 ms in Python (benchmark test, generous bound).
+- Matcher checks only rules indexed under the current folded code point; benchmark: 20 000-char text with 2 000 account + 848 seed + 10 000 synthetic system rules completes < 200 ms in Python (generous bound), and `compile_rules` for that set < 500 ms.
 
 ## Risk
 | Risk | L x I | Mitigation |
 |---|---|---|
 | Python/TS drift later | M x H | Vectors are the contract; any change requires a vector first |
-| Performance with 2000 account + ~850 system rules | M x M | Index rules by first folded code point; benchmark test |
-| Fallback `<en>` wrapping of common words that are also Vietnamese-readable | M x M | Fallback only from curated system packs; admins edit/disable entries (phase 14); `<en>` interpretation listed for confirmation |
+| Performance with 2000 account + large system packs | M x M | Required first-code-point index; system layer compiled once and cached (phase 9); `SYSTEM_RULES_MAX` cap (phase 5); benchmark test |
+| Fallback `<en>` wrapping of common words that are also Vietnamese-readable | M x M | Fallback only from curated system packs; admins edit/disable entries (phase 14); `<en>` interpretation confirmed |
 
 ## Rollback
 Pure additive modules; delete them.
